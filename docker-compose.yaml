@@ -9,8 +9,6 @@ services:
       - caddy_config:/config
     ports:
       - "8085:80"
-      - "443:443"
-      - "443:443/udp"
     depends_on:
       - db
     environment:
