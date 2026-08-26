@@ -1,0 +1,32 @@
+services:
+  php:
+    build: .
+    image: moja-strona-php:dev
+    volumes:
+      - .:/var/www
+      - ./config:/etc/frankenphp
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      - "8085:80"
+      - "443:443"
+      - "443:443/udp"
+    depends_on:
+      - db
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: app
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  caddy_data:
+  caddy_config:
+  postgres_data:

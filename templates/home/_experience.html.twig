@@ -1,0 +1,31 @@
+<section id="experience" class="section experience" aria-labelledby="experience-heading" data-reveal>
+    <div class="container">
+        <header class="section__header">
+            <h2 id="experience-heading" class="section__title">Experience</h2>
+            <p class="section__intro">[Brief intro to your experience — or leave as placeholder.]</p>
+        </header>
+
+        <ol class="experience__list">
+            {% for entry in experience %}
+                <li>
+                    <article class="experience-item">
+                        <p class="experience-item__period">{{ entry.period }}</p>
+                        <h3 class="experience-item__role">{{ entry.role }}</h3>
+                        <p class="experience-item__company">{{ entry.company }}</p>
+                        <p class="experience-item__summary">{{ entry.summary }}</p>
+                        <ul class="experience-item__bullets">
+                            {% for bullet in entry.bullets %}
+                                <li>{{ bullet }}</li>
+                            {% endfor %}
+                        </ul>
+                        <ul class="experience-item__tech">
+                            {% for tech in entry.technologies %}
+                                <li>{{ tech }}</li>
+                            {% endfor %}
+                        </ul>
+                    </article>
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+</section>

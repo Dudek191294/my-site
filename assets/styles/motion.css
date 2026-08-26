@@ -1,0 +1,177 @@
+/* STEP 11 — Motion (CSS first, limited set) */
+
+:root {
+    --motion-fast: 150ms;
+    --motion-base: 280ms;
+    --motion-reveal: 420ms;
+    --motion-ease: ease;
+}
+
+/* 1) Nav / footer / social: underline grow */
+.site-nav__list a,
+.site-footer__links a,
+.hero__social a,
+.project-card__links a,
+.case-study__back a,
+.case-study__links a {
+    position: relative;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 1px;
+    transition:
+        color var(--motion-fast) var(--motion-ease),
+        background-size var(--motion-base) var(--motion-ease);
+}
+
+.site-nav__list a:hover,
+.site-nav__list a:focus-visible,
+.site-footer__links a:hover,
+.site-footer__links a:focus-visible,
+.hero__social a:hover,
+.hero__social a:focus-visible,
+.project-card__links a:hover,
+.project-card__links a:focus-visible,
+.case-study__back a:hover,
+.case-study__back a:focus-visible,
+.case-study__links a:hover,
+.case-study__links a:focus-visible {
+    background-size: 100% 1px;
+}
+
+/* 2) CTA / buttons: subtle lift */
+.btn {
+    transition:
+        background-color var(--motion-fast) var(--motion-ease),
+        color var(--motion-fast) var(--motion-ease),
+        border-color var(--motion-fast) var(--motion-ease),
+        transform var(--motion-fast) var(--motion-ease),
+        box-shadow var(--motion-fast) var(--motion-ease);
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn--primary:hover {
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--color-accent) 28%, transparent);
+}
+
+/* 3) Project cards: light border + lift */
+.project-card {
+    transition:
+        transform var(--motion-base) var(--motion-ease),
+        border-color var(--motion-base) var(--motion-ease),
+        box-shadow var(--motion-base) var(--motion-ease);
+}
+
+.project-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+    box-shadow: 0 10px 28px color-mix(in srgb, #000 35%, transparent);
+}
+
+/* 4) Hero entrance (once on load) */
+.hero__inner {
+    animation: hero-enter var(--motion-reveal) var(--motion-ease) both;
+}
+
+@keyframes hero-enter {
+    from {
+        opacity: 0;
+        transform: translateY(0.6rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 5) Section reveal on scroll */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(0.85rem);
+    transition:
+        opacity var(--motion-reveal) var(--motion-ease),
+        transform var(--motion-reveal) var(--motion-ease);
+    will-change: opacity, transform;
+}
+
+[data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-reveal].is-visible {
+    will-change: auto;
+}
+
+/* Reduced motion: instant final state, no transforms */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .hero__inner {
+        animation: none;
+    }
+
+    [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        will-change: auto;
+    }
+
+    .btn,
+    .project-card,
+    .site-nav__list a,
+    .site-footer__links a,
+    .hero__social a,
+    .project-card__links a,
+    .case-study__back a,
+    .case-study__links a {
+        transition: none;
+    }
+
+    .btn:hover,
+    .btn:active,
+    .project-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .btn--primary:hover {
+        box-shadow: none;
+    }
+
+    .site-nav__list a,
+    .site-footer__links a,
+    .hero__social a,
+    .project-card__links a,
+    .case-study__back a,
+    .case-study__links a {
+        background-size: 0 1px;
+    }
+
+    .site-nav__list a:hover,
+    .site-nav__list a:focus-visible,
+    .site-footer__links a:hover,
+    .site-footer__links a:focus-visible,
+    .hero__social a:hover,
+    .hero__social a:focus-visible,
+    .project-card__links a:hover,
+    .project-card__links a:focus-visible,
+    .case-study__back a:hover,
+    .case-study__back a:focus-visible,
+    .case-study__links a:hover,
+    .case-study__links a:focus-visible {
+        background-size: 100% 1px;
+        transition: none;
+    }
+}

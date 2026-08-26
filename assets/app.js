@@ -1,0 +1,9 @@
+import './styles/app.css';
+import './styles/layout.css';
+import './styles/hero.css';
+import './styles/projects.css';
+import './styles/case-study.css';
+import './styles/sections.css';
+import './styles/responsive.css';
+import './styles/motion.css';
+import './motion.js';

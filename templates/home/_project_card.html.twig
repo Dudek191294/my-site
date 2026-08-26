@@ -1,0 +1,23 @@
+<article class="project-card">
+    <div class="project-card__visual" role="img" aria-label="{{ project.imageAlt }}">
+        {% if project.image %}
+            <img src="{{ project.image }}" alt="{{ project.imageAlt }}" loading="lazy" width="640" height="400">
+        {% else %}
+            <span class="project-card__placeholder">[SCREENSHOT]</span>
+        {% endif %}
+    </div>
+    <div class="project-card__body">
+        <h3 class="project-card__title">{{ project.name }}</h3>
+        <p class="project-card__summary">{{ project.summary }}</p>
+        <ul class="project-card__stack">
+            {% for tech in project.stack %}
+                <li>{{ tech }}</li>
+            {% endfor %}
+        </ul>
+        <ul class="project-card__links">
+            <li><a href="{{ project.demoUrl }}">Demo</a></li>
+            <li><a href="{{ project.githubUrl }}">GitHub</a></li>
+            <li><a href="{{ path('project_show', {slug: project.slug}) }}">Case study</a></li>
+        </ul>
+    </div>
+</article>

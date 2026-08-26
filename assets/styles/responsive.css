@@ -1,0 +1,119 @@
+/* STEP 10 — Responsive polish (mobile → tablet → desktop → wide) */
+
+html {
+    overflow-x: clip;
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: clip;
+}
+
+/* Safer horizontal rhythm on very narrow screens */
+@media (max-width: 22.5rem) {
+    .container {
+        width: min(100% - 1.5rem, var(--container-width));
+    }
+}
+
+/* Tap targets — mobile nav */
+.nav-toggle-label {
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0.6rem;
+    box-sizing: border-box;
+}
+
+.site-nav__list a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    padding-block: var(--space-md);
+}
+
+/* Hero CTA: full-width buttons on narrow phones */
+.hero__actions .btn {
+    flex: 1 1 100%;
+    text-align: center;
+}
+
+@media (min-width: 30rem) {
+    .hero__actions .btn {
+        flex: 0 1 auto;
+    }
+}
+
+/* Project / section padding scale */
+@media (min-width: 48rem) {
+    .projects,
+    .section {
+        padding-block: calc(var(--space-2xl) + var(--space-md));
+    }
+}
+
+@media (min-width: 64rem) {
+    .projects,
+    .section,
+    .hero {
+        padding-block: calc(var(--space-2xl) + var(--space-xl));
+    }
+
+    .hero {
+        padding-block: calc(var(--space-2xl) + var(--space-xl));
+    }
+}
+
+/* Wide desktop: keep content readable, use container already */
+@media (min-width: 90rem) {
+    :root {
+        --container-width: 76rem;
+    }
+}
+
+/* Case study: keep architecture arrows from colliding */
+.architecture-flow {
+    gap: var(--space-lg);
+}
+
+.architecture-flow li:not(:last-child) {
+    margin-bottom: var(--space-sm);
+}
+
+.architecture-flow li:not(:last-child)::after {
+    bottom: calc(-1 * var(--space-lg) + 0.15rem);
+}
+
+/* Experience period column: avoid cramped text */
+@media (min-width: 48rem) {
+    .experience-item {
+        grid-template-columns: minmax(7.5rem, 9.5rem) minmax(0, 1fr);
+    }
+}
+
+/* Desktop nav: restore compact padding after mobile tap targets */
+@media (min-width: 48rem) {
+    .site-nav__list a {
+        min-height: 0;
+        padding-block: var(--space-xs);
+    }
+}
+
+/* Footer links: better tap on mobile */
+.site-footer__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+}
+
+@media (min-width: 48rem) {
+    .site-footer__links a {
+        min-height: 0;
+    }
+}
+
+/* Prevent long placeholder URLs from blowing layout */
+.project-card__links a,
+.case-study__links a,
+.hero__social a {
+    overflow-wrap: anywhere;
+}

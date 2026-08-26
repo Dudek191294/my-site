@@ -1,0 +1,86 @@
+/* Design tokens — foundation (STEP 01) */
+:root {
+    /* Colors — dark/neutral bg, light typography, subtle accent */
+    --color-bg: #0f1115;
+    --color-surface: #1a1d24;
+    --color-text: #f2f4f8;
+    --color-muted: #9aa3b2;
+    --color-border: #2a2f3a;
+    --color-accent: #6ea8fe;
+    --color-accent-hover: #8bbcff;
+
+    --container-width: 72rem;
+
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2.5rem;
+    --space-2xl: 4rem;
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    color: var(--color-accent);
+}
+
+a:hover {
+    color: var(--color-accent-hover);
+}
+
+a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.2;
+    font-weight: 600;
+    margin: 0 0 var(--space-md);
+}
+
+p {
+    margin: 0 0 var(--space-md);
+}
+
+.container {
+    width: min(100% - 2 * var(--space-md), var(--container-width));
+    margin-inline: auto;
+}

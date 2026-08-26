@@ -1,0 +1,32 @@
+<section id="stack" class="section stack" aria-labelledby="stack-heading" data-reveal>
+    <div class="container">
+        <header class="section__header">
+            <h2 id="stack-heading" class="section__title">Tech Stack</h2>
+            <p class="section__intro">[Tools I use to ship and operate products — replace with real stack.]</p>
+        </header>
+
+        <div class="stack__grid">
+            {% for category, items in stack %}
+                <div class="stack-group">
+                    <h3 class="stack-group__title">{{ category }}</h3>
+                    <ul class="stack-group__list">
+                        {% for item in items %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+
+        <aside class="stack__github" aria-labelledby="github-heading">
+            <h3 id="github-heading" class="stack__github-title">GitHub / Open Source</h3>
+            <p class="stack__github-text">
+                [GITHUB / OSS — describe real repos or contributions, or replace this block when you have links.
+                Placeholder only — not claiming activity.]
+            </p>
+            <p class="stack__github-link">
+                <a href="[GITHUB_URL]" rel="noopener noreferrer">[GITHUB_URL]</a>
+            </p>
+        </aside>
+    </div>
+</section>
