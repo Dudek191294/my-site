@@ -22,7 +22,8 @@
         "symfony/security-bundle": "8.1.*",
         "symfony/translation": "8.1.*",
         "symfony/twig-bundle": "8.1.*",
-        "symfony/yaml": "8.1.*"
+        "symfony/yaml": "8.1.*",
+        "symfonycasts/tailwind-bundle": "^1.0"
     },
     "config": {
         "allow-plugins": {

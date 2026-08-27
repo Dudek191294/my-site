@@ -52,6 +52,18 @@ class SiteSetting
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $contactEmail = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $projectsIntro = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $experienceIntro = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $stackIntro = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $githubIntro = null;
+
     #[ORM\Column(length: 300, nullable: true)]
     private ?string $metaDescription = null;
 
@@ -213,6 +225,58 @@ class SiteSetting
         return $this;
     }
 
+    public function getProjectsIntro(): ?string
+    {
+        return $this->projectsIntro;
+    }
+
+    public function setProjectsIntro(?string $projectsIntro): static
+    {
+        $projectsIntro = $projectsIntro !== null ? trim($projectsIntro) : null;
+        $this->projectsIntro = $projectsIntro === '' ? null : $projectsIntro;
+
+        return $this;
+    }
+
+    public function getExperienceIntro(): ?string
+    {
+        return $this->experienceIntro;
+    }
+
+    public function setExperienceIntro(?string $experienceIntro): static
+    {
+        $experienceIntro = $experienceIntro !== null ? trim($experienceIntro) : null;
+        $this->experienceIntro = $experienceIntro === '' ? null : $experienceIntro;
+
+        return $this;
+    }
+
+    public function getStackIntro(): ?string
+    {
+        return $this->stackIntro;
+    }
+
+    public function setStackIntro(?string $stackIntro): static
+    {
+        $stackIntro = $stackIntro !== null ? trim($stackIntro) : null;
+        $this->stackIntro = $stackIntro === '' ? null : $stackIntro;
+
+        return $this;
+    }
+
+    public function getGithubIntro(): ?string
+    {
+        return $this->githubIntro;
+    }
+
+    public function setGithubIntro(?string $githubIntro): static
+    {
+        $githubIntro = $githubIntro !== null ? trim($githubIntro) : null;
+        $this->githubIntro = $githubIntro === '' ? null : $githubIntro;
+
+        return $this;
+    }
+
     public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
@@ -232,6 +296,6 @@ class SiteSetting
 
     public function __toString(): string
     {
-        return $this->siteName !== '' ? $this->siteName : 'Site settings';
+        return $this->siteName !== '' ? $this->siteName : 'Ustawienia strony';
     }
 }

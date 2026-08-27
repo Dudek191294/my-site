@@ -48,13 +48,6 @@
     object-fit: cover;
 }
 
-.project-card__placeholder {
-    color: var(--color-muted);
-    font-size: 0.875rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
 .project-card__body {
     padding: var(--space-lg);
     display: flex;

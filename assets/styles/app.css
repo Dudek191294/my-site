@@ -1,3 +1,20 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities";
+
+@source "../../templates/";
+@source "./**/*.js";
+
+@theme {
+    --color-bg: #0f1115;
+    --color-surface: #1a1d24;
+    --color-text: #f2f4f8;
+    --color-muted: #9aa3b2;
+    --color-border: #2a2f3a;
+    --color-accent: #6ea8fe;
+    --color-accent-hover: #8bbcff;
+}
+
 /* Design tokens — foundation (STEP 01) */
 :root {
     /* Colors — dark/neutral bg, light typography, subtle accent */

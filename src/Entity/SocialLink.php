@@ -113,6 +113,6 @@ class SocialLink
 
     public function __toString(): string
     {
-        return $this->label !== '' ? $this->label : 'Social link';
+        return $this->label !== '' ? $this->label : 'Link społecznościowy';
     }
 }

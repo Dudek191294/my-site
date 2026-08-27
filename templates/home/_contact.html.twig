@@ -1,43 +1,27 @@
 <section id="contact" class="section contact" aria-labelledby="contact-heading" data-reveal>
     <div class="container section__inner section__inner--narrow">
         <header class="section__header">
-            <h2 id="contact-heading" class="section__title">Let's build something.</h2>
-            <p class="section__intro">
-                {{ site and site.contactIntro ? site.contactIntro : '[Short message — open to collaborations, product work, or a quick technical chat.]' }}
-            </p>
+            <h2 id="contact-heading" class="section__title">Zbudujmy coś razem.</h2>
+            {% if site and site.contactIntro %}
+                <p class="section__intro">{{ site.contactIntro }}</p>
+            {% endif %}
         </header>
 
-        <ul class="contact__channels">
-            {% if socialLinks is defined and socialLinks|length > 0 %}
+        {% if socialLinks|length > 0 %}
+            <ul class="contact__channels">
                 {% for link in socialLinks %}
                     <li>
                         <span class="contact__label">{{ link.label }}</span>
                         <a href="{{ link.url }}"{% if link.platform != 'email' %} rel="noopener noreferrer"{% endif %}>{{ link.url }}</a>
                     </li>
                 {% endfor %}
-            {% else %}
-                <li>
-                    <span class="contact__label">Email</span>
-                    <a href="mailto:[EMAIL]">[EMAIL]</a>
-                </li>
-                <li>
-                    <span class="contact__label">LinkedIn</span>
-                    <a href="[LINKEDIN_URL]" rel="noopener noreferrer">[LINKEDIN_URL]</a>
-                </li>
-                <li>
-                    <span class="contact__label">GitHub</span>
-                    <a href="[GITHUB_URL]" rel="noopener noreferrer">[GITHUB_URL]</a>
-                </li>
-            {% endif %}
-        </ul>
+            </ul>
+        {% endif %}
 
-        {% set contactEmail = site and site.contactEmail ? site.contactEmail : null %}
-        <p class="contact__cta">
-            {% if contactEmail %}
-                <a class="btn btn--primary" href="mailto:{{ contactEmail }}">Get in touch</a>
-            {% else %}
-                <a class="btn btn--primary" href="mailto:[EMAIL]">Get in touch</a>
-            {% endif %}
-        </p>
+        {% if site and site.contactEmail %}
+            <p class="contact__cta">
+                <a class="btn btn--primary" href="mailto:{{ site.contactEmail }}">Napisz do mnie</a>
+            </p>
+        {% endif %}
     </div>
 </section>

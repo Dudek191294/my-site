@@ -1,35 +1,42 @@
 <section id="stack" class="section stack" aria-labelledby="stack-heading" data-reveal>
     <div class="container">
         <header class="section__header">
-            <h2 id="stack-heading" class="section__title">Tech Stack</h2>
-            <p class="section__intro">[Tools I use to ship and operate products — replace with real stack.]</p>
+            <h2 id="stack-heading" class="section__title">Stack technologiczny</h2>
+            {% if site and site.stackIntro %}
+                <p class="section__intro">{{ site.stackIntro }}</p>
+            {% endif %}
         </header>
 
-        <div class="stack__grid">
-            {% for category, items in stack %}
-                <div class="stack-group">
-                    <h3 class="stack-group__title">{{ category }}</h3>
-                    <ul class="stack-group__list">
-                        {% for item in items %}
-                            <li>{% include 'components/stack_item.html.twig' with { stack: item } only %}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
-        </div>
+        {% if stack|length > 0 %}
+            <div class="stack__grid">
+                {% for category, items in stack %}
+                    <div class="stack-group">
+                        <h3 class="stack-group__title">{{ category }}</h3>
+                        <ul class="stack-group__list">
+                            {% for item in items %}
+                                <li>{% include 'components/stack_item.html.twig' with { stack: item } only %}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted m-0">Brak opublikowanych technologii.</p>
+        {% endif %}
 
-        <aside class="stack__github" aria-labelledby="github-heading">
-            <h3 id="github-heading" class="stack__github-title">GitHub / Open Source</h3>
-            <p class="stack__github-text">
-                [GITHUB / OSS — describe real repos or contributions, or replace this block when you have links.
-                Placeholder only — not claiming activity.]
-            </p>
-            {% set github = socialLinks|filter(l => l.platform == 'github')|first %}
-            {% if github %}
-                <p class="stack__github-link">
-                    <a href="{{ github.url }}" rel="noopener noreferrer">{{ github.label }}</a>
-                </p>
-            {% endif %}
-        </aside>
+        {% set github = socialLinks|filter(l => l.platform == 'github')|first %}
+        {% if (site and site.githubIntro) or github %}
+            <aside class="stack__github" aria-labelledby="github-heading">
+                <h3 id="github-heading" class="stack__github-title">GitHub / open source</h3>
+                {% if site and site.githubIntro %}
+                    <p class="stack__github-text">{{ site.githubIntro }}</p>
+                {% endif %}
+                {% if github %}
+                    <p class="stack__github-link">
+                        <a href="{{ github.url }}" rel="noopener noreferrer">{{ github.label }}</a>
+                    </p>
+                {% endif %}
+            </aside>
+        {% endif %}
     </div>
 </section>

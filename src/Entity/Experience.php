@@ -182,14 +182,14 @@ class Experience
     }
 
     /**
-     * Human-readable period for the public timeline (e.g. "2022 — Present").
+     * Human-readable period for the public timeline (e.g. "2022 — obecnie").
      */
     public function getPeriod(): string
     {
         $start = $this->startDate->format('Y');
 
         if ($this->current || $this->endDate === null) {
-            return sprintf('%s — Present', $start);
+            return sprintf('%s — obecnie', $start);
         }
 
         return sprintf('%s — %s', $start, $this->endDate->format('Y'));
@@ -223,6 +223,6 @@ class Experience
     {
         $label = trim($this->role.' @ '.$this->company);
 
-        return $label !== '@' && $label !== '' ? $label : 'Experience';
+        return $label !== '@' && $label !== '' ? $label : 'Doświadczenie';
     }
 }

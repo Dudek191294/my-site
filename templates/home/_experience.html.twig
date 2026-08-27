@@ -1,31 +1,41 @@
 <section id="experience" class="section experience" aria-labelledby="experience-heading" data-reveal>
     <div class="container">
         <header class="section__header">
-            <h2 id="experience-heading" class="section__title">Experience</h2>
-            <p class="section__intro">[Brief intro to your experience — or leave as placeholder.]</p>
+            <h2 id="experience-heading" class="section__title">Doświadczenie</h2>
+            {% if site and site.experienceIntro %}
+                <p class="section__intro">{{ site.experienceIntro }}</p>
+            {% endif %}
         </header>
 
-        <ol class="experience__list">
-            {% for entry in experience %}
-                <li>
-                    <article class="experience-item">
-                        <p class="experience-item__period">{{ entry.period }}</p>
-                        <h3 class="experience-item__role">{{ entry.role }}</h3>
-                        <p class="experience-item__company">{{ entry.company }}</p>
-                        <p class="experience-item__summary">{{ entry.description }}</p>
-                        <ul class="experience-item__bullets">
-                            {% for bullet in entry.bullets %}
-                                <li>{{ bullet }}</li>
-                            {% endfor %}
-                        </ul>
-                        <ul class="experience-item__tech">
-                            {% for item in entry.stacks %}
-                                <li>{% include 'components/stack_item.html.twig' with { stack: item } only %}</li>
-                            {% endfor %}
-                        </ul>
-                    </article>
-                </li>
-            {% endfor %}
-        </ol>
+        {% if experience|length > 0 %}
+            <ol class="experience__list">
+                {% for entry in experience %}
+                    <li>
+                        <article class="experience-item">
+                            <p class="experience-item__period">{{ entry.period }}</p>
+                            <h3 class="experience-item__role">{{ entry.role }}</h3>
+                            <p class="experience-item__company">{{ entry.company }}</p>
+                            <p class="experience-item__summary">{{ entry.description }}</p>
+                            {% if entry.bullets|length > 0 %}
+                                <ul class="experience-item__bullets">
+                                    {% for bullet in entry.bullets %}
+                                        <li>{{ bullet }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            {% if entry.stacks|length > 0 %}
+                                <ul class="experience-item__tech">
+                                    {% for item in entry.stacks %}
+                                        <li>{% include 'components/stack_item.html.twig' with { stack: item } only %}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </article>
+                    </li>
+                {% endfor %}
+            </ol>
+        {% else %}
+            <p class="text-muted m-0">Brak opublikowanych wpisów doświadczenia.</p>
+        {% endif %}
     </div>
 </section>

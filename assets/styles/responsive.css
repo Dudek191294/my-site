@@ -70,19 +70,6 @@ body {
     }
 }
 
-/* Case study: keep architecture arrows from colliding */
-.architecture-flow {
-    gap: var(--space-lg);
-}
-
-.architecture-flow li:not(:last-child) {
-    margin-bottom: var(--space-sm);
-}
-
-.architecture-flow li:not(:last-child)::after {
-    bottom: calc(-1 * var(--space-lg) + 0.15rem);
-}
-
 /* Experience period column: avoid cramped text */
 @media (min-width: 48rem) {
     .experience-item {

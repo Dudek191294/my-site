@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\ProjectRepository;
-use App\Repository\SiteSettingRepository;
-use App\Repository\SocialLinkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -16,19 +14,15 @@ final class ProjectController extends AbstractController
     public function show(
         string $slug,
         ProjectRepository $projects,
-        SiteSettingRepository $siteSettings,
-        SocialLinkRepository $socialLinks,
     ): Response {
         $project = $projects->findPublishedBySlug($slug);
 
         if ($project === null) {
-            throw new NotFoundHttpException(sprintf('Project "%s" not found.', $slug));
+            throw new NotFoundHttpException(sprintf('Nie znaleziono projektu „%s”.', $slug));
         }
 
         return $this->render('project/show.html.twig', [
             'project' => $project,
-            'site' => $siteSettings->findSingleton(),
-            'socialLinks' => $socialLinks->findPublishedOrdered(),
         ]);
     }
 }

@@ -42,10 +42,16 @@
     font-size: clamp(1.75rem, 4vw, 2.5rem);
 }
 
-.case-study__summary {
-    margin: 0;
-    color: var(--color-muted);
-    font-size: 1.0625rem;
+.case-study__cover {
+    margin: 0 0 var(--space-2xl);
+}
+
+.case-study__cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
 }
 
 .case-study__section {
@@ -68,53 +74,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
-}
-
-.architecture-flow {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-}
-
-.architecture-flow li {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-md);
-}
-
-.architecture-flow li:not(:last-child) {
-    margin-bottom: var(--space-xs);
-    box-shadow: 0 calc(var(--space-sm) + 0.35rem) 0 -0.45rem transparent;
-    position: relative;
-}
-
-.architecture-flow li:not(:last-child)::after {
-    content: "↓";
-    position: absolute;
-    left: 50%;
-    bottom: calc(-1 * var(--space-md));
-    transform: translateX(-50%);
-    color: var(--color-accent);
-    font-size: 0.875rem;
-    line-height: 1;
-}
-
-.architecture-flow__layer {
-    display: block;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: var(--space-xs);
-    font-size: 0.875rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-}
-
-.architecture-flow p {
-    margin: 0;
 }
 
 .case-study__stack {

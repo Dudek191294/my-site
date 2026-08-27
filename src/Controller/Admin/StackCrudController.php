@@ -10,12 +10,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
@@ -37,12 +34,12 @@ class StackCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Stack')
+            ->setEntityLabelInSingular('technologię')
             ->setEntityLabelInPlural('Stack')
             ->setPageTitle(Crud::PAGE_INDEX, 'Stack')
-            ->setPageTitle(Crud::PAGE_NEW, 'New technology')
-            ->setPageTitle(Crud::PAGE_EDIT, 'Edit technology')
-            ->setSearchFields(['name', 'slug', 'icon'])
+            ->setPageTitle(Crud::PAGE_NEW, 'Nowa technologia')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Edytuj technologię')
+            ->setSearchFields(['name', 'icon'])
             ->setDefaultSort(['category' => 'ASC', 'sortOrder' => 'ASC'])
             ->setPaginatorPageSize(30)
             ->setAutofocusSearch();
@@ -56,10 +53,10 @@ class StackCrudController extends AbstractCrudController
         }
 
         return $filters
-            ->add(BooleanFilter::new('published'))
-            ->add(BooleanFilter::new('featured'))
-            ->add(ChoiceFilter::new('category')->setChoices($categoryChoices))
-            ->add(TextFilter::new('name'));
+            ->add(BooleanFilter::new('published', 'Opublikowana'))
+            ->add(BooleanFilter::new('featured', 'Wyróżniona'))
+            ->add(ChoiceFilter::new('category', 'Kategoria')->setChoices($categoryChoices))
+            ->add(TextFilter::new('name', 'Nazwa'));
     }
 
     public function configureFields(string $pageName): iterable
@@ -67,48 +64,36 @@ class StackCrudController extends AbstractCrudController
         $iconChoices = $this->iconCatalog->choices();
 
         yield FormField::addColumn(8);
-        yield TextField::new('name')
+        yield TextField::new('name', 'Nazwa')
             ->setRequired(true)
             ->setMaxLength(120);
-        yield SlugField::new('slug')
-            ->setTargetFieldName('name')
-            ->setRequired(true)
-            ->setHelp('Unique identifier, e.g. react, postgresql, tailwindcss.');
-        yield ChoiceField::new('category')
+        yield ChoiceField::new('category', 'Kategoria')
             ->setRequired(true)
             ->setChoices($this->categoryChoices())
             ->renderAsNativeWidget();
 
         if ($iconChoices === []) {
-            yield TextField::new('icon')
+            yield TextField::new('icon', 'Ikona')
                 ->setRequired(false)
-                ->setHelp('No local icons yet. Run: php bin/console app:import-simple-icons react symfony php postgresql docker tailwindcss')
+                ->setHelp('Brak lokalnych ikon. Uruchom: php bin/console app:import-simple-icons react symfony php postgresql docker tailwindcss')
                 ->setFormTypeOption('attr', [
                     'placeholder' => 'react',
                     'pattern' => '[a-z0-9]{1,80}',
                     'maxlength' => 80,
                 ]);
         } else {
-            yield ChoiceField::new('icon')
+            yield ChoiceField::new('icon', 'Ikona')
                 ->setRequired(false)
                 ->setChoices($iconChoices)
                 ->renderAsNativeWidget()
-                ->setHelp('Local SVG from public/icons/stack/. Import more with app:import-simple-icons.');
+                ->setHelp('Ikona SVG z public/icons/stack/. Więcej zaimportujesz komendą app:import-simple-icons.');
         }
 
-        yield ColorField::new('color')
-            ->setRequired(false)
-            ->setHelp('Optional brand color. Public site uses monochrome icons by default.')
-            ->hideOnIndex();
-        yield UrlField::new('websiteUrl', 'Website URL')
-            ->setRequired(false)
-            ->hideOnIndex();
-
         yield FormField::addColumn(4);
-        yield BooleanField::new('published')->renderAsSwitch(true);
-        yield BooleanField::new('featured')->renderAsSwitch(true);
-        yield IntegerField::new('sortOrder', 'Sort order')
-            ->setHelp('Order within the category (lower first).')
+        yield BooleanField::new('published', 'Opublikowana')->renderAsSwitch(true);
+        yield BooleanField::new('featured', 'Wyróżniona')->renderAsSwitch(true);
+        yield IntegerField::new('sortOrder', 'Kolejność')
+            ->setHelp('Kolejność w kategorii (niższe najpierw).')
             ->setFormTypeOption('attr', ['min' => 0]);
     }
 

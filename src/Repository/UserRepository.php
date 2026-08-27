@@ -32,4 +32,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    public function countAdmins(): int
+    {
+        $count = 0;
+        foreach ($this->findAll() as $user) {
+            if ($user->isAdmin()) {
+                ++$count;
+            }
+        }
+
+        return $count;
+    }
 }

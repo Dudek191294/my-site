@@ -27,9 +27,11 @@ class SocialLinkCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Social link')
-            ->setEntityLabelInPlural('Social links')
-            ->setPageTitle(Crud::PAGE_INDEX, 'Social links')
+            ->setEntityLabelInSingular('link społecznościowy')
+            ->setEntityLabelInPlural('Linki społecznościowe')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Linki społecznościowe')
+            ->setPageTitle(Crud::PAGE_NEW, 'Nowy link społecznościowy')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Edytuj link społecznościowy')
             ->setSearchFields(['label', 'platform', 'url'])
             ->setDefaultSort(['sortOrder' => 'ASC'])
             ->setPaginatorPageSize(20)
@@ -39,36 +41,36 @@ class SocialLinkCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(BooleanFilter::new('published'))
-            ->add(ChoiceFilter::new('platform')->setChoices($this->platformChoices()))
-            ->add(TextFilter::new('label'));
+            ->add(BooleanFilter::new('published', 'Opublikowany'))
+            ->add(ChoiceFilter::new('platform', 'Platforma')->setChoices($this->platformChoices()))
+            ->add(TextFilter::new('label', 'Etykieta'));
     }
 
     public function configureFields(string $pageName): iterable
     {
         yield FormField::addColumn(8);
-        yield ChoiceField::new('platform')
+        yield ChoiceField::new('platform', 'Platforma')
             ->setRequired(true)
             ->setChoices($this->platformChoices())
             ->renderAsNativeWidget()
-            ->setHelp('One link per platform (unique).');
-        yield TextField::new('label')
+            ->setHelp('Jeden link na platformę (unikalny).');
+        yield TextField::new('label', 'Etykieta')
             ->setRequired(true)
             ->setMaxLength(80)
             ->setFormTypeOption('attr', ['placeholder' => 'GitHub']);
         yield TextField::new('url', 'URL')
             ->setRequired(true)
-            ->setHelp('Full URL or mailto: address.')
+            ->setHelp('Pełny URL albo adres mailto:.')
             ->setFormTypeOption('attr', ['placeholder' => 'https://github.com/you']);
-        yield TextField::new('icon')
+        yield TextField::new('icon', 'Ikona')
             ->setRequired(false)
-            ->setHelp('Icon identifier/slug, not an SVG.')
+            ->setHelp('Identyfikator/slug ikony, nie SVG.')
             ->hideOnIndex();
 
         yield FormField::addColumn(4);
-        yield BooleanField::new('published')->renderAsSwitch(true);
-        yield IntegerField::new('sortOrder', 'Sort order')
-            ->setHelp('Lower numbers appear first.')
+        yield BooleanField::new('published', 'Opublikowany')->renderAsSwitch(true);
+        yield IntegerField::new('sortOrder', 'Kolejność')
+            ->setHelp('Niższe liczby pojawiają się wcześniej.')
             ->setFormTypeOption('attr', ['min' => 0]);
     }
 
@@ -80,9 +82,9 @@ class SocialLinkCrudController extends AbstractCrudController
         return [
             'GitHub' => 'github',
             'LinkedIn' => 'linkedin',
-            'Email' => 'email',
+            'E-mail' => 'email',
             'X / Twitter' => 'x',
-            'Other' => 'other',
+            'Inne' => 'other',
         ];
     }
 }

@@ -1,18 +1,19 @@
 <header class="site-header">
     <div class="container site-header__inner">
-        <a class="site-logo" href="{{ path('home') }}">{{ site is defined and site ? site.siteName : '[YOUR NAME]' }}</a>
+        <a class="site-logo" href="{{ path('home') }}">{{ site ? site.siteName : 'Portfolio' }}</a>
         <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
-        <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+        <label for="nav-toggle" class="nav-toggle-label" aria-label="Przełącz nawigację">
             <span></span>
             <span></span>
             <span></span>
         </label>
-        <nav class="site-nav" aria-label="Primary">
+        <nav class="site-nav" aria-label="Główna">
             <ul class="site-nav__list">
-                <li><a href="{{ path('home') }}#work">Work</a></li>
-                <li><a href="{{ path('home') }}#about">About</a></li>
-                <li><a href="{{ path('home') }}#experience">Experience</a></li>
-                <li><a href="{{ path('home') }}#contact">Contact</a></li>
+                <li><a href="{{ path('home') }}#work">Realizacje</a></li>
+                <li><a href="{{ path('home') }}#about">O mnie</a></li>
+                <li><a href="{{ path('home') }}#experience">Doświadczenie</a></li>
+                <li><a href="{{ path('home') }}#stack">Stack</a></li>
+                <li><a href="{{ path('home') }}#contact">Kontakt</a></li>
             </ul>
         </nav>
     </div>

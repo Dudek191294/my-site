@@ -1,13 +1,19 @@
 <section id="work" class="projects" aria-labelledby="work-heading" data-reveal>
     <div class="container">
         <header class="projects__header">
-            <h2 id="work-heading" class="projects__title">Selected Work</h2>
-            <p class="projects__intro">[Brief intro to your selected projects — or leave as placeholder.]</p>
+            <h2 id="work-heading" class="projects__title">Wybrane realizacje</h2>
+            {% if site and site.projectsIntro %}
+                <p class="projects__intro">{{ site.projectsIntro }}</p>
+            {% endif %}
         </header>
-        <div class="projects__grid">
-            {% for project in projects %}
-                {% include 'home/_project_card.html.twig' with {project: project} only %}
-            {% endfor %}
-        </div>
+        {% if projects|length > 0 %}
+            <div class="projects__grid">
+                {% for project in projects %}
+                    {% include 'home/_project_card.html.twig' with {project: project} only %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted m-0">Brak opublikowanych projektów.</p>
+        {% endif %}
     </div>
 </section>

@@ -6,11 +6,11 @@ use App\Entity\Project;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -31,11 +31,11 @@ class ProjectCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Project')
-            ->setEntityLabelInPlural('Projects')
-            ->setPageTitle(Crud::PAGE_INDEX, 'Projects')
-            ->setPageTitle(Crud::PAGE_NEW, 'New project')
-            ->setPageTitle(Crud::PAGE_EDIT, 'Edit project')
+            ->setEntityLabelInSingular('projekt')
+            ->setEntityLabelInPlural('Projekty')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Projekty')
+            ->setPageTitle(Crud::PAGE_NEW, 'Nowy projekt')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Edytuj projekt')
             ->setSearchFields(['title', 'slug', 'shortDescription', 'role'])
             ->setDefaultSort(['sortOrder' => 'ASC', 'id' => 'DESC'])
             ->setPaginatorPageSize(20)
@@ -45,101 +45,93 @@ class ProjectCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(BooleanFilter::new('published'))
-            ->add(BooleanFilter::new('featured'))
-            ->add(TextFilter::new('title'))
-            ->add(TextFilter::new('slug'));
+            ->add(BooleanFilter::new('published', 'Opublikowany'))
+            ->add(BooleanFilter::new('featured', 'Wyróżniony'))
+            ->add(TextFilter::new('title', 'Tytuł'))
+            ->add(TextFilter::new('slug', 'Slug'));
     }
 
     public function configureFields(string $pageName): iterable
     {
-        yield FormField::addTab('General');
+        yield FormField::addTab('Ogólne');
         yield FormField::addColumn(8);
-        yield TextField::new('title')
+        yield TextField::new('title', 'Tytuł')
             ->setRequired(true)
             ->setMaxLength(180)
-            ->setHelp('Public project name.');
-        yield SlugField::new('slug')
+            ->setHelp('Publiczna nazwa projektu.');
+        yield SlugField::new('slug', 'Slug')
             ->setTargetFieldName('title')
             ->setRequired(true)
-            ->setHelp('URL segment, e.g. my-portfolio-app.');
-        yield TextareaField::new('shortDescription', 'Short description')
+            ->setHelp('Segment adresu URL, np. moja-aplikacja-portfolio.');
+        yield TextareaField::new('shortDescription', 'Krótki opis')
             ->setRequired(true)
-            ->setHelp('Shown on the home project cards.')
+            ->setHelp('Tylko karta na stronie głównej — 1–2 zdania. Nie jest powtarzany na stronie projektu.')
             ->hideOnIndex();
-        yield TextareaField::new('description')
+        yield TextareaField::new('description', 'Opis projektu')
             ->setRequired(true)
-            ->setHelp('Longer project description.')
+            ->setHelp('Jedyna dłuższa treść na stronie projektu.')
             ->hideOnIndex();
-        yield TextField::new('role')
-            ->setRequired(true)
-            ->setHelp('Your role on this project.')
+        yield TextField::new('role', 'Rola')
+            ->setRequired(false)
+            ->setHelp('Opcjonalnie. Zostaw puste, jeśli nie chcesz wyróżniać osobnej roli (np. przy pracy fullstack).')
             ->hideOnIndex();
 
         yield FormField::addColumn(4);
-        yield BooleanField::new('published')
+        yield BooleanField::new('published', 'Opublikowany')
             ->renderAsSwitch(true)
-            ->setHelp('Only published projects appear on the public site.');
-        yield BooleanField::new('featured')
+            ->setHelp('Na stronie publicznej widać tylko opublikowane projekty.');
+        yield BooleanField::new('featured', 'Wyróżniony')
             ->renderAsSwitch(true)
-            ->setHelp('Highlight on the projects listing.');
-        yield IntegerField::new('sortOrder', 'Sort order')
-            ->setHelp('Lower numbers appear first.')
+            ->setHelp('Wyróżnij na liście projektów.');
+        yield IntegerField::new('sortOrder', 'Kolejność')
+            ->setHelp('Niższe liczby pojawiają się wcześniej.')
             ->setFormTypeOption('attr', ['min' => 0]);
-        yield DateTimeField::new('createdAt')
+        yield DateTimeField::new('createdAt', 'Utworzono')
             ->hideOnForm()
             ->setFormat('short', 'short');
-        yield DateTimeField::new('updatedAt')
+        yield DateTimeField::new('updatedAt', 'Zaktualizowano')
             ->hideOnForm()
             ->hideOnIndex()
             ->setFormat('short', 'short');
 
-        yield FormField::addTab('Links & media');
-        yield UrlField::new('demoUrl', 'Demo URL')
+        yield FormField::addTab('Linki i media');
+        yield UrlField::new('demoUrl', 'URL demo')
             ->setRequired(false)
             ->hideOnIndex();
-        yield UrlField::new('githubUrl', 'GitHub URL')
+        yield UrlField::new('githubUrl', 'URL GitHub')
             ->setRequired(false)
             ->hideOnIndex();
-        yield TextField::new('image')
+        yield ImageField::new('image', 'Obraz')
             ->setRequired(false)
-            ->setHelp('Path or URL to the cover image (not an uploaded file yet).')
+            ->setBasePath('uploads/projects')
+            ->setUploadDir('public/uploads/projects')
+            ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]')
+            ->mimeTypes('image/jpeg,image/png,image/webp,image/gif', 'Wgraj obraz JPG, PNG, WebP albo GIF.')
+            ->maxSize('8M', 'Obraz może mieć maksymalnie 8 MB.')
+            ->setHelp('Przeciągnij plik tutaj albo kliknij „Dodaj plik”.')
             ->hideOnIndex();
-        yield TextField::new('imageAlt', 'Image alt text')
+        yield TextField::new('imageAlt', 'Tekst alternatywny obrazu')
             ->setRequired(false)
             ->hideOnIndex();
 
         yield FormField::addTab('Stack');
-        yield AssociationField::new('stacks')
+        yield AssociationField::new('stacks', 'Technologie')
             ->setRequired(false)
             ->autocomplete()
             ->setFormTypeOption('by_reference', false)
-            ->setHelp('Select existing technologies. Create new ones under Stack first.')
+            ->setHelp('Wybierz istniejące technologie. Nowe dodaj najpierw w module Stack.')
             ->formatValue(static function ($value, Project $entity): string {
                 return implode(', ', $entity->getStacks()->map(static fn ($s) => $s->getName())->toArray());
             });
 
-        yield FormField::addTab('Case study');
-        yield TextareaField::new('overview')->setRequired(true)->hideOnIndex();
-        yield TextareaField::new('problem')->setRequired(true)->hideOnIndex();
-        yield TextareaField::new('solution')->setRequired(true)->hideOnIndex();
-        yield TextareaField::new('result')->setRequired(true)->hideOnIndex();
-
-        yield FormField::addFieldset('Architecture');
-        yield TextareaField::new('architectureFrontend', 'Frontend')->hideOnIndex();
-        yield TextareaField::new('architectureApi', 'API')->hideOnIndex();
-        yield TextareaField::new('architectureBackend', 'Backend')->hideOnIndex();
-        yield TextareaField::new('architectureDatabase', 'Database')->hideOnIndex();
-        yield TextareaField::new('architectureInfrastructure', 'Infrastructure')->hideOnIndex();
-
-        yield ArrayField::new('technicalDecisions', 'Technical decisions')
-            ->setHelp('One decision per entry.')
+        yield FormField::addTab('Studium przypadku');
+        yield TextareaField::new('challenge', 'Wyzwanie')
+            ->setRequired(false)
+            ->setHelp('Opcjonalnie. Pokazywane na stronie projektu tylko gdy wypełnione.')
             ->hideOnIndex();
-        yield ArrayField::new('challenges')
-            ->setHelp('One challenge per entry.')
-            ->hideOnIndex();
-        yield ArrayField::new('lessonsLearned', 'Lessons learned')
-            ->setHelp('One lesson per entry.')
+        yield TextareaField::new('solution', 'Rozwiązanie')
+            ->setRequired(false)
+            ->setHelp('Opcjonalnie. Pokazywane na stronie projektu tylko gdy wypełnione.')
             ->hideOnIndex();
     }
 }

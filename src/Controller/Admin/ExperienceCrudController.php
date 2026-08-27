@@ -30,9 +30,11 @@ class ExperienceCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Experience')
-            ->setEntityLabelInPlural('Experience')
-            ->setPageTitle(Crud::PAGE_INDEX, 'Experience')
+            ->setEntityLabelInSingular('doświadczenie')
+            ->setEntityLabelInPlural('Doświadczenie')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Doświadczenie')
+            ->setPageTitle(Crud::PAGE_NEW, 'Nowe doświadczenie')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Edytuj doświadczenie')
             ->setSearchFields(['company', 'role', 'description'])
             ->setDefaultSort(['sortOrder' => 'ASC', 'startDate' => 'DESC'])
             ->setPaginatorPageSize(20)
@@ -42,50 +44,51 @@ class ExperienceCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(BooleanFilter::new('published'))
-            ->add(BooleanFilter::new('current'))
-            ->add(TextFilter::new('company'))
-            ->add(TextFilter::new('role'))
-            ->add(DateTimeFilter::new('startDate'));
+            ->add(BooleanFilter::new('published', 'Opublikowane'))
+            ->add(BooleanFilter::new('current', 'Obecne'))
+            ->add(TextFilter::new('company', 'Firma'))
+            ->add(TextFilter::new('role', 'Stanowisko'))
+            ->add(DateTimeFilter::new('startDate', 'Data rozpoczęcia'));
     }
 
     public function configureFields(string $pageName): iterable
     {
         yield FormField::addColumn(8);
-        yield TextField::new('company')->setRequired(true)->setMaxLength(180);
-        yield TextField::new('role')->setRequired(true)->setMaxLength(180);
-        yield TextareaField::new('description')
+        yield TextField::new('company', 'Firma')->setRequired(true)->setMaxLength(180);
+        yield TextField::new('role', 'Stanowisko')->setRequired(true)->setMaxLength(180);
+        yield TextareaField::new('description', 'Opis')
             ->setRequired(true)
-            ->setHelp('Short summary of the role.')
+            ->setHelp('Krótkie podsumowanie roli.')
             ->hideOnIndex();
-        yield ArrayField::new('bullets')
-            ->setHelp('Key achievements — one per entry.')
+        yield ArrayField::new('bullets', 'Osiągnięcia')
+            ->setRequired(false)
+            ->setHelp('Opcjonalnie. Lista punktów na stronie publicznej tylko gdy jest choć jeden wpis.')
             ->hideOnIndex();
-        yield AssociationField::new('stacks')
+        yield AssociationField::new('stacks', 'Technologie')
             ->setRequired(false)
             ->autocomplete()
             ->setFormTypeOption('by_reference', false)
-            ->setHelp('Select existing technologies. Create new ones under Stack first.')
+            ->setHelp('Wybierz istniejące technologie. Nowe dodaj najpierw w module Stack.')
             ->formatValue(static function ($value, Experience $entity): string {
                 return implode(', ', $entity->getStacks()->map(static fn ($s) => $s->getName())->toArray());
             });
 
         yield FormField::addColumn(4);
-        yield DateField::new('startDate', 'Start date')->setRequired(true);
-        yield DateField::new('endDate', 'End date')
+        yield DateField::new('startDate', 'Data rozpoczęcia')->setRequired(true);
+        yield DateField::new('endDate', 'Data zakończenia')
             ->setRequired(false)
-            ->setHelp('Leave empty when the role is current.');
-        yield BooleanField::new('current')
+            ->setHelp('Zostaw puste, jeśli to obecne stanowisko.');
+        yield BooleanField::new('current', 'Obecne')
             ->renderAsSwitch(true)
-            ->setHelp('Mark as your current position.');
-        yield BooleanField::new('published')
+            ->setHelp('Oznacz jako obecne stanowisko.');
+        yield BooleanField::new('published', 'Opublikowane')
             ->renderAsSwitch(true)
-            ->setHelp('Only published entries appear publicly.');
-        yield IntegerField::new('sortOrder', 'Sort order')
-            ->setHelp('Lower numbers appear first.')
+            ->setHelp('Na stronie publicznej widać tylko opublikowane wpisy.');
+        yield IntegerField::new('sortOrder', 'Kolejność')
+            ->setHelp('Niższe liczby pojawiają się wcześniej.')
             ->setFormTypeOption('attr', ['min' => 0]);
         yield TextField::new('period')
             ->onlyOnIndex()
-            ->setLabel('Period');
+            ->setLabel('Okres');
     }
 }

@@ -1,118 +1,75 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ project.title }} — Case Study{% endblock %}
+{% block title %}{{ project.title }} — Studium przypadku{% endblock %}
 
 {% block body %}
 <article class="case-study" data-reveal>
     <div class="container case-study__inner">
         <p class="case-study__back">
-            <a href="{{ path('home') }}#work">&larr; Back to Selected Work</a>
+            <a href="{{ path('home') }}#work">&larr; Wróć do realizacji</a>
         </p>
 
         <header class="case-study__header">
-            <p class="case-study__eyebrow">Project</p>
+            <p class="case-study__eyebrow">Projekt</p>
             <h1 class="case-study__title">{{ project.title }}</h1>
-            <p class="case-study__summary">{{ project.shortDescription }}</p>
         </header>
 
-        <section class="case-study__section" aria-labelledby="overview-heading">
-            <h2 id="overview-heading">Overview</h2>
-            <p>{{ project.overview }}</p>
+        {% if project.imageUrl %}
+            <p class="case-study__cover">
+                <img src="{{ project.imageUrl }}" alt="{{ project.imageAlt|default(project.title) }}" width="960" height="600">
+            </p>
+        {% endif %}
+
+        <section class="case-study__section" aria-labelledby="description-heading">
+            <h2 id="description-heading">Opis projektu</h2>
+            <p class="text-muted whitespace-pre-line">{{ project.description }}</p>
         </section>
 
-        <section class="case-study__section" aria-labelledby="problem-heading">
-            <h2 id="problem-heading">Problem</h2>
-            <p>{{ project.problem }}</p>
-        </section>
+        {% if project.role %}
+            <section class="case-study__section" aria-labelledby="role-heading">
+                <h2 id="role-heading">Rola</h2>
+                <p class="text-muted">{{ project.role }}</p>
+            </section>
+        {% endif %}
 
-        <section class="case-study__section" aria-labelledby="solution-heading">
-            <h2 id="solution-heading">Solution</h2>
-            <p>{{ project.solution }}</p>
-        </section>
+        {% if project.challenge %}
+            <section class="case-study__section" aria-labelledby="challenge-heading">
+                <h2 id="challenge-heading">Wyzwanie</h2>
+                <p class="text-muted whitespace-pre-line">{{ project.challenge }}</p>
+            </section>
+        {% endif %}
 
-        <section class="case-study__section" aria-labelledby="role-heading">
-            <h2 id="role-heading">Role</h2>
-            <p>{{ project.role }}</p>
-        </section>
+        {% if project.solution %}
+            <section class="case-study__section" aria-labelledby="solution-heading">
+                <h2 id="solution-heading">Rozwiązanie</h2>
+                <p class="text-muted whitespace-pre-line">{{ project.solution }}</p>
+            </section>
+        {% endif %}
 
-        <section class="case-study__section" aria-labelledby="architecture-heading">
-            <h2 id="architecture-heading">Architecture</h2>
-            <ol class="architecture-flow">
-                <li>
-                    <span class="architecture-flow__layer">Frontend</span>
-                    <p>{{ project.architecture.frontend|default('') }}</p>
-                </li>
-                <li>
-                    <span class="architecture-flow__layer">API</span>
-                    <p>{{ project.architecture.api|default('') }}</p>
-                </li>
-                <li>
-                    <span class="architecture-flow__layer">Backend</span>
-                    <p>{{ project.architecture.backend|default('') }}</p>
-                </li>
-                <li>
-                    <span class="architecture-flow__layer">Database</span>
-                    <p>{{ project.architecture.database|default('') }}</p>
-                </li>
-                <li>
-                    <span class="architecture-flow__layer">Infrastructure</span>
-                    <p>{{ project.architecture.infrastructure|default('') }}</p>
-                </li>
-            </ol>
-        </section>
+        {% if project.stacks|length > 0 %}
+            <section class="case-study__section" aria-labelledby="stack-heading">
+                <h2 id="stack-heading">Stack technologiczny</h2>
+                <ul class="case-study__stack">
+                    {% for item in project.stacks %}
+                        <li>{% include 'components/stack_item.html.twig' with { stack: item } only %}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
 
-        <section class="case-study__section" aria-labelledby="decisions-heading">
-            <h2 id="decisions-heading">Technical Decisions</h2>
-            <ul>
-                {% for decision in project.technicalDecisions %}
-                    <li>{{ decision }}</li>
-                {% endfor %}
-            </ul>
-        </section>
-
-        <section class="case-study__section" aria-labelledby="challenges-heading">
-            <h2 id="challenges-heading">Challenges</h2>
-            <ul>
-                {% for challenge in project.challenges %}
-                    <li>{{ challenge }}</li>
-                {% endfor %}
-            </ul>
-        </section>
-
-        <section class="case-study__section" aria-labelledby="result-heading">
-            <h2 id="result-heading">Result</h2>
-            <p>{{ project.result }}</p>
-        </section>
-
-        <section class="case-study__section" aria-labelledby="lessons-heading">
-            <h2 id="lessons-heading">Lessons Learned</h2>
-            <ul>
-                {% for lesson in project.lessonsLearned %}
-                    <li>{{ lesson }}</li>
-                {% endfor %}
-            </ul>
-        </section>
-
-        <section class="case-study__section" aria-labelledby="stack-heading">
-            <h2 id="stack-heading">Tech Stack</h2>
-            <ul class="case-study__stack">
-                {% for item in project.stacks %}
-                    <li>{% include 'components/stack_item.html.twig' with { stack: item } only %}</li>
-                {% endfor %}
-            </ul>
-        </section>
-
-        <section class="case-study__section" aria-labelledby="links-heading">
-            <h2 id="links-heading">Links</h2>
-            <ul class="case-study__links">
-                {% if project.demoUrl %}
-                    <li><a href="{{ project.demoUrl }}">Demo</a></li>
-                {% endif %}
-                {% if project.githubUrl %}
-                    <li><a href="{{ project.githubUrl }}">GitHub</a></li>
-                {% endif %}
-            </ul>
-        </section>
+        {% if project.demoUrl or project.githubUrl %}
+            <section class="case-study__section" aria-labelledby="links-heading">
+                <h2 id="links-heading">Linki</h2>
+                <ul class="case-study__links">
+                    {% if project.demoUrl %}
+                        <li><a href="{{ project.demoUrl }}">Demo</a></li>
+                    {% endif %}
+                    {% if project.githubUrl %}
+                        <li><a href="{{ project.githubUrl }}">GitHub</a></li>
+                    {% endif %}
+                </ul>
+            </section>
+        {% endif %}
     </div>
 </article>
 {% endblock %}

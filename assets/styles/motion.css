@@ -76,7 +76,7 @@
 }
 
 /* 4) Hero entrance (once on load) */
-.hero__inner {
+.hero > .container {
     animation: hero-enter var(--motion-reveal) var(--motion-ease) both;
 }
 
@@ -117,7 +117,7 @@
         scroll-behavior: auto;
     }
 
-    .hero__inner {
+    .hero > .container {
         animation: none;
     }
 

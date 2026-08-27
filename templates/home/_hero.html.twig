@@ -1,29 +1,49 @@
 <section class="hero" aria-labelledby="hero-heading">
-    <div class="container hero__inner">
-        <p class="hero__eyebrow">{{ site ? site.roleTitle : '[ROLE]' }}</p>
-        <h1 id="hero-heading" class="hero__title">{{ site ? site.headline : '[HEADLINE]' }}</h1>
-        <p class="hero__positioning">{{ site ? site.positioning : '[POSITIONING — one or two sentences about what you build and for whom.]' }}</p>
-        <div class="hero__actions">
-            <a class="btn btn--primary" href="{{ path('home') }}#work">View my work</a>
-            <a class="btn btn--secondary" href="{{ path('home') }}#contact">Get in touch</a>
-        </div>
-        <ul class="hero__social">
-            {% if socialLinks is defined and socialLinks|length > 0 %}
-                {% for link in socialLinks %}
-                    <li>
-                        <a href="{{ link.url }}"{% if link.platform != 'email' %} rel="noopener noreferrer"{% endif %}>{{ link.label }}</a>
-                    </li>
-                {% endfor %}
+    <div class="container flex flex-col items-start gap-10 md:flex-row md:items-center md:justify-between md:gap-16">
+        <div class="hero__inner">
+            {% if site %}
+                {% if site.roleTitle %}
+                    <p class="hero__eyebrow">{{ site.roleTitle }}</p>
+                {% endif %}
+                <h1 id="hero-heading" class="hero__title">{{ site.headline }}</h1>
+                {% if site.positioning %}
+                    <p class="hero__positioning">{{ site.positioning }}</p>
+                {% endif %}
             {% else %}
-                <li><a href="[GITHUB_URL]" rel="noopener noreferrer">GitHub</a></li>
-                <li><a href="[LINKEDIN_URL]" rel="noopener noreferrer">LinkedIn</a></li>
-                <li><a href="mailto:[EMAIL]">Email</a></li>
+                <h1 id="hero-heading" class="hero__title">Portfolio</h1>
             {% endif %}
-        </ul>
-        <p class="hero__meta">
-            {{ site and site.location ? site.location : '[LOCATION]' }}
-            ·
-            {{ site and site.availability ? site.availability : '[AVAILABILITY]' }}
-        </p>
+            <div class="hero__actions">
+                <a class="btn btn--primary" href="{{ path('home') }}#work">Zobacz realizacje</a>
+                <a class="btn btn--secondary" href="{{ path('home') }}#contact">Napisz do mnie</a>
+            </div>
+            {% if socialLinks|length > 0 %}
+                <ul class="hero__social">
+                    {% for link in socialLinks %}
+                        <li>
+                            <a href="{{ link.url }}"{% if link.platform != 'email' %} rel="noopener noreferrer"{% endif %}>{{ link.label }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% set heroMeta = [] %}
+            {% if site and site.location %}
+                {% set heroMeta = heroMeta|merge([site.location]) %}
+            {% endif %}
+            {% if site and site.availability %}
+                {% set heroMeta = heroMeta|merge([site.availability]) %}
+            {% endif %}
+            {% if heroMeta|length > 0 %}
+                <p class="hero__meta">{{ heroMeta|join(' · ') }}</p>
+            {% endif %}
+        </div>
+        <figure class="m-0 w-44 shrink-0 overflow-hidden rounded-lg border border-border sm:w-52 md:w-60">
+            <img
+                src="/images/moje.jpg"
+                alt="{{ site ? site.siteName : 'Portret' }}"
+                width="800"
+                height="1200"
+                class="h-auto w-full object-cover object-top"
+            >
+        </figure>
     </div>
 </section>

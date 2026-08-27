@@ -1,19 +1,15 @@
 <footer class="site-footer">
     <div class="container site-footer__inner">
-        <p class="site-footer__brand">{{ site is defined and site ? site.siteName : '[YOUR NAME]' }}</p>
-        <p class="site-footer__copy">&copy; {{ "now"|date("Y") }} {{ site is defined and site ? site.siteName : '[YOUR NAME]' }}. All rights reserved.</p>
-        <ul class="site-footer__links">
-            {% if socialLinks is defined and socialLinks|length > 0 %}
+        <p class="site-footer__brand">{{ site ? site.siteName : 'Portfolio' }}</p>
+        <p class="site-footer__copy">&copy; {{ "now"|date("Y") }} {{ site ? site.siteName : 'Portfolio' }}. Wszelkie prawa zastrzeżone.</p>
+        {% if socialLinks|length > 0 %}
+            <ul class="site-footer__links">
                 {% for link in socialLinks %}
                     <li>
                         <a href="{{ link.url }}"{% if link.platform != 'email' %} rel="noopener noreferrer"{% endif %}>{{ link.label }}</a>
                     </li>
                 {% endfor %}
-            {% else %}
-                <li><a href="[GITHUB_URL]" rel="noopener noreferrer">GitHub</a></li>
-                <li><a href="[LINKEDIN_URL]" rel="noopener noreferrer">LinkedIn</a></li>
-                <li><a href="mailto:[EMAIL]">Email</a></li>
-            {% endif %}
-        </ul>
+            </ul>
+        {% endif %}
     </div>
 </footer>

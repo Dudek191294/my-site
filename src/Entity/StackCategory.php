@@ -17,11 +17,11 @@ enum StackCategory: string
         return match ($this) {
             self::Frontend => 'Frontend',
             self::Backend => 'Backend',
-            self::Database => 'Database',
-            self::Infrastructure => 'Infrastructure',
-            self::Testing => 'Testing',
-            self::Tools => 'Tools',
-            self::Other => 'Other',
+            self::Database => 'Baza danych',
+            self::Infrastructure => 'Infrastruktura',
+            self::Testing => 'Testy',
+            self::Tools => 'Narzędzia',
+            self::Other => 'Inne',
         };
     }
 }

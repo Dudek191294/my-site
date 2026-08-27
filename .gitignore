@@ -15,4 +15,7 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
+/public/uploads/projects/*
+!/public/uploads/projects/.gitkeep
+
 .ai/

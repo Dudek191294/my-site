@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Login — Admin{% endblock %}
+{% block title %}Logowanie — Admin{% endblock %}
 
 {% block body %}
 <section class="admin-login container" aria-labelledby="login-heading">
-    <h1 id="login-heading">Admin login</h1>
+    <h1 id="login-heading">Logowanie administratora</h1>
 
     {% if error %}
-        <p class="admin-login__error" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        <p class="admin-login__error" role="alert">Nieprawidłowy e-mail lub hasło.</p>
     {% endif %}
 
     <form method="post" class="admin-login__form" novalidate>
         <div class="admin-login__field">
-            <label for="email">Email</label>
+            <label for="email">E-mail</label>
             <input
                 type="email"
                 id="email"
@@ -25,7 +25,7 @@
         </div>
 
         <div class="admin-login__field">
-            <label for="password">Password</label>
+            <label for="password">Hasło</label>
             <input
                 type="password"
                 id="password"
@@ -37,7 +37,7 @@
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <button type="submit">Sign in</button>
+        <button type="submit">Zaloguj się</button>
     </form>
 </section>
 {% endblock %}
