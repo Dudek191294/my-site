@@ -1,0 +1,10 @@
+# CSRF for Symfony Forms uses the "submit" token id by default (stateless).
+# Login/logout keep classic session CSRF via csrf_token('authenticate'|'logout').
+framework:
+    form:
+        csrf_protection:
+            token_id: submit
+
+    csrf_protection:
+        stateless_token_ids:
+            - submit

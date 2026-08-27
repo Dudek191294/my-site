@@ -11,7 +11,7 @@
                     <h3 class="stack-group__title">{{ category }}</h3>
                     <ul class="stack-group__list">
                         {% for item in items %}
-                            <li>{{ item }}</li>
+                            <li>{% include 'components/stack_item.html.twig' with { stack: item } only %}</li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -24,9 +24,12 @@
                 [GITHUB / OSS — describe real repos or contributions, or replace this block when you have links.
                 Placeholder only — not claiming activity.]
             </p>
-            <p class="stack__github-link">
-                <a href="[GITHUB_URL]" rel="noopener noreferrer">[GITHUB_URL]</a>
-            </p>
+            {% set github = socialLinks|filter(l => l.platform == 'github')|first %}
+            {% if github %}
+                <p class="stack__github-link">
+                    <a href="{{ github.url }}" rel="noopener noreferrer">{{ github.label }}</a>
+                </p>
+            {% endif %}
         </aside>
     </div>
 </section>

@@ -12,15 +12,15 @@
                         <p class="experience-item__period">{{ entry.period }}</p>
                         <h3 class="experience-item__role">{{ entry.role }}</h3>
                         <p class="experience-item__company">{{ entry.company }}</p>
-                        <p class="experience-item__summary">{{ entry.summary }}</p>
+                        <p class="experience-item__summary">{{ entry.description }}</p>
                         <ul class="experience-item__bullets">
                             {% for bullet in entry.bullets %}
                                 <li>{{ bullet }}</li>
                             {% endfor %}
                         </ul>
                         <ul class="experience-item__tech">
-                            {% for tech in entry.technologies %}
-                                <li>{{ tech }}</li>
+                            {% for item in entry.stacks %}
+                                <li>{% include 'components/stack_item.html.twig' with { stack: item } only %}</li>
                             {% endfor %}
                         </ul>
                     </article>

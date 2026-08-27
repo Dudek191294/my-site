@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use App\Portfolio\ExperienceProvider;
-use App\Portfolio\ProjectProvider;
-use App\Portfolio\StackProvider;
+use App\Repository\ExperienceRepository;
+use App\Repository\ProjectRepository;
+use App\Repository\SiteSettingRepository;
+use App\Repository\StackRepository;
+use App\Repository\SocialLinkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,14 +15,18 @@ final class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
     public function index(
-        ProjectProvider $projects,
-        ExperienceProvider $experience,
-        StackProvider $stack,
+        ProjectRepository $projects,
+        ExperienceRepository $experience,
+        StackRepository $stacks,
+        SiteSettingRepository $siteSettings,
+        SocialLinkRepository $socialLinks,
     ): Response {
         return $this->render('home/index.html.twig', [
-            'projects' => $projects->all(),
-            'experience' => $experience->all(),
-            'stack' => $stack->categories(),
+            'projects' => $projects->findPublished(),
+            'experience' => $experience->findPublishedOrdered(),
+            'stack' => $stacks->findPublishedGroupedByCategory(),
+            'site' => $siteSettings->findSingleton(),
+            'socialLinks' => $socialLinks->findPublishedOrdered(),
         ]);
     }
 }

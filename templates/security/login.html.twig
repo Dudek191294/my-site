@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login — Admin{% endblock %}
+
+{% block body %}
+<section class="admin-login container" aria-labelledby="login-heading">
+    <h1 id="login-heading">Admin login</h1>
+
+    {% if error %}
+        <p class="admin-login__error" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+    {% endif %}
+
+    <form method="post" class="admin-login__form" novalidate>
+        <div class="admin-login__field">
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="{{ last_username }}"
+                autocomplete="username"
+                required
+                autofocus
+            >
+        </div>
+
+        <div class="admin-login__field">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+            >
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <button type="submit">Sign in</button>
+    </form>
+</section>
+{% endblock %}

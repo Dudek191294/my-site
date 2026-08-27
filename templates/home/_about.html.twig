@@ -4,24 +4,38 @@
             <h2 id="about-heading" class="section__title">About</h2>
         </header>
         <div class="about__body">
-            <p>
-                [ABOUT — who I am: role and focus, e.g. full-stack developer building web products from idea to production.]
-            </p>
-            <p>
-                [ABOUT — what I do: the kinds of systems and products I work on, and for whom.]
-            </p>
-            <p>
-                [ABOUT — problems I solve: reliability, delivery, clarity of architecture — replace with real themes.]
-            </p>
-            <p>
-                [ABOUT — how I work: collaboration, incremental delivery, pragmatic engineering — replace with your approach.]
-            </p>
+            {% if site and site.aboutBody %}
+                {% for paragraph in site.aboutBody|split('\n\n') %}
+                    {% if paragraph|trim %}
+                        <p>{{ paragraph|nl2br }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>
+                    [ABOUT — who I am: role and focus, e.g. full-stack developer building web products from idea to production.]
+                </p>
+                <p>
+                    [ABOUT — what I do: the kinds of systems and products I work on, and for whom.]
+                </p>
+                <p>
+                    [ABOUT — problems I solve: reliability, delivery, clarity of architecture — replace with real themes.]
+                </p>
+                <p>
+                    [ABOUT — how I work: collaboration, incremental delivery, pragmatic engineering — replace with your approach.]
+                </p>
+            {% endif %}
         </div>
         <ul class="about__meta">
-            <li>[LOCATION]</li>
-            <li>[REMOTE / HYBRID]</li>
-            <li>[WORKING PRINCIPLE 1]</li>
-            <li>[WORKING PRINCIPLE 2]</li>
+            <li>{{ site and site.location ? site.location : '[LOCATION]' }}</li>
+            <li>{{ site and site.workMode ? site.workMode : '[REMOTE / HYBRID]' }}</li>
+            {% if site and site.principles|length > 0 %}
+                {% for principle in site.principles %}
+                    <li>{{ principle }}</li>
+                {% endfor %}
+            {% else %}
+                <li>[WORKING PRINCIPLE 1]</li>
+                <li>[WORKING PRINCIPLE 2]</li>
+            {% endif %}
         </ul>
     </div>
 </section>

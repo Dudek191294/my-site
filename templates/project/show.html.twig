@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ project.name }} — Case Study{% endblock %}
+{% block title %}{{ project.title }} — Case Study{% endblock %}
 
 {% block body %}
 <article class="case-study" data-reveal>
@@ -11,8 +11,8 @@
 
         <header class="case-study__header">
             <p class="case-study__eyebrow">Project</p>
-            <h1 class="case-study__title">{{ project.name }}</h1>
-            <p class="case-study__summary">{{ project.summary }}</p>
+            <h1 class="case-study__title">{{ project.title }}</h1>
+            <p class="case-study__summary">{{ project.shortDescription }}</p>
         </header>
 
         <section class="case-study__section" aria-labelledby="overview-heading">
@@ -40,23 +40,23 @@
             <ol class="architecture-flow">
                 <li>
                     <span class="architecture-flow__layer">Frontend</span>
-                    <p>{{ project.architecture.frontend }}</p>
+                    <p>{{ project.architecture.frontend|default('') }}</p>
                 </li>
                 <li>
                     <span class="architecture-flow__layer">API</span>
-                    <p>{{ project.architecture.api }}</p>
+                    <p>{{ project.architecture.api|default('') }}</p>
                 </li>
                 <li>
                     <span class="architecture-flow__layer">Backend</span>
-                    <p>{{ project.architecture.backend }}</p>
+                    <p>{{ project.architecture.backend|default('') }}</p>
                 </li>
                 <li>
                     <span class="architecture-flow__layer">Database</span>
-                    <p>{{ project.architecture.database }}</p>
+                    <p>{{ project.architecture.database|default('') }}</p>
                 </li>
                 <li>
                     <span class="architecture-flow__layer">Infrastructure</span>
-                    <p>{{ project.architecture.infrastructure }}</p>
+                    <p>{{ project.architecture.infrastructure|default('') }}</p>
                 </li>
             </ol>
         </section>
@@ -96,8 +96,8 @@
         <section class="case-study__section" aria-labelledby="stack-heading">
             <h2 id="stack-heading">Tech Stack</h2>
             <ul class="case-study__stack">
-                {% for tech in project.stack %}
-                    <li>{{ tech }}</li>
+                {% for item in project.stacks %}
+                    <li>{% include 'components/stack_item.html.twig' with { stack: item } only %}</li>
                 {% endfor %}
             </ul>
         </section>
@@ -105,8 +105,12 @@
         <section class="case-study__section" aria-labelledby="links-heading">
             <h2 id="links-heading">Links</h2>
             <ul class="case-study__links">
-                <li><a href="{{ project.demoUrl }}">Demo</a></li>
-                <li><a href="{{ project.githubUrl }}">GitHub</a></li>
+                {% if project.demoUrl %}
+                    <li><a href="{{ project.demoUrl }}">Demo</a></li>
+                {% endif %}
+                {% if project.githubUrl %}
+                    <li><a href="{{ project.githubUrl }}">GitHub</a></li>
+                {% endif %}
             </ul>
         </section>
     </div>

@@ -1,0 +1,8 @@
+{# Reusable stack technology item: local SVG + name. Icon is decorative when name is present. #}
+{% set iconSvg = stack.icon ? stack_icon_svg(stack.icon) : '' %}
+<span class="stack-item">
+    {% if iconSvg %}
+        <span class="stack-item__icon" aria-hidden="true">{{ iconSvg|raw }}</span>
+    {% endif %}
+    <span class="stack-item__name">{{ stack.name }}</span>
+</span>

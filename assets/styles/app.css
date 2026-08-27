@@ -84,3 +84,87 @@ p {
     width: min(100% - 2 * var(--space-md), var(--container-width));
     margin-inline: auto;
 }
+
+.admin-login {
+    padding-block: var(--space-2xl);
+    max-width: 24rem;
+}
+
+.admin-login__error {
+    color: #ff8f8f;
+}
+
+.admin-login__field {
+    margin-bottom: var(--space-md);
+}
+
+.admin-login__field label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    color: var(--color-muted);
+}
+
+.admin-login__field input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+}
+
+.admin-login__field input:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.admin-login__form button {
+    margin-top: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent);
+    color: #0f1115;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-login__form button:hover {
+    background: var(--color-accent-hover);
+}
+
+.admin-login__form button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.admin-home {
+    padding-block: var(--space-2xl);
+}
+
+.stack-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.stack-item__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 1.125em;
+    height: 1.125em;
+    color: var(--color-muted);
+}
+
+.stack-item__icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+    display: block;
+}
+
+.stack-item__name {
+    line-height: 1.2;
+}

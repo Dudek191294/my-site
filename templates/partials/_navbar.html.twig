@@ -1,6 +1,6 @@
 <header class="site-header">
     <div class="container site-header__inner">
-        <a class="site-logo" href="{{ path('home') }}">[YOUR NAME]</a>
+        <a class="site-logo" href="{{ path('home') }}">{{ site is defined and site ? site.siteName : '[YOUR NAME]' }}</a>
         <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
         <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
             <span></span>
