@@ -20,9 +20,6 @@ body {
         grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     }
 
-    .hero__photo {
-        padding: 0.28rem;
-    }
 }
 
 /* Tap targets — mobile nav */
