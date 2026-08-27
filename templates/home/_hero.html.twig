@@ -1,5 +1,5 @@
 <section class="hero" aria-labelledby="hero-heading">
-    <div class="container flex flex-col items-start gap-10 md:flex-row md:items-center md:justify-between md:gap-16">
+    <div class="container hero__layout">
         <div class="hero__inner">
             {% if site %}
                 {% if site.roleTitle %}
@@ -36,13 +36,12 @@
                 <p class="hero__meta">{{ heroMeta|join(' · ') }}</p>
             {% endif %}
         </div>
-        <figure class="m-0 w-44 shrink-0 overflow-hidden rounded-lg border border-border sm:w-52 md:w-60">
+        <figure class="hero__photo">
             <img
                 src="/images/moje.jpg"
                 alt="{{ site ? site.siteName : 'Portret' }}"
                 width="800"
                 height="1200"
-                class="h-auto w-full object-cover object-top"
             >
         </figure>
     </div>
