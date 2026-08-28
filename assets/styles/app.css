@@ -166,3 +166,10 @@ p {
 .admin-home {
     padding-block: var(--space-2xl);
 }
+
+.tech-pill__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}

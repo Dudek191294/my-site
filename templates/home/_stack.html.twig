@@ -14,7 +14,7 @@
                         <h3 class="stack-group__title">{{ category }}</h3>
                         <ul class="stack-group__list">
                             {% for item in items %}
-                                <li>{% include 'components/technology_pill.html.twig' with { name: item.name, icon: item.icon, variant: 'neutral' } only %}</li>
+                                <li>{% include 'components/technology_pill.html.twig' with { name: item.name, icon: item.icon, variant: 'primary' } only %}</li>
                             {% endfor %}
                         </ul>
                     </div>

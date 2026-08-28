@@ -51,7 +51,7 @@
                 <h2 id="stack-heading">Stack technologiczny</h2>
                 <ul class="case-study__stack">
                     {% for item in project.stacks %}
-                        <li>{% include 'components/technology_pill.html.twig' with { name: item.name, icon: item.icon, variant: 'neutral' } only %}</li>
+                        <li>{% include 'components/technology_pill.html.twig' with { name: item.name, icon: item.icon, variant: 'primary' } only %}</li>
                     {% endfor %}
                 </ul>
             </section>
