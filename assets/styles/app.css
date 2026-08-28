@@ -13,6 +13,9 @@
     --color-border: #2a2f3a;
     --color-accent: #6ea8fe;
     --color-accent-hover: #8bbcff;
+    --color-success: #6ee7a0;
+    --color-warning: #fbbf24;
+    --color-danger: #ff8f8f;
 }
 
 /* Design tokens — foundation (STEP 01) */
@@ -25,6 +28,9 @@
     --color-border: #2a2f3a;
     --color-accent: #6ea8fe;
     --color-accent-hover: #8bbcff;
+    --color-success: #6ee7a0;
+    --color-warning: #fbbf24;
+    --color-danger: #ff8f8f;
 
     --container-width: 72rem;
 
@@ -159,29 +165,4 @@ p {
 
 .admin-home {
     padding-block: var(--space-2xl);
-}
-
-.stack-item {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-}
-
-.stack-item__icon {
-    display: inline-flex;
-    flex-shrink: 0;
-    width: 1.125em;
-    height: 1.125em;
-    color: var(--color-muted);
-}
-
-.stack-item__icon svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
-    display: block;
-}
-
-.stack-item__name {
-    line-height: 1.2;
 }

@@ -4,7 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\Stack;
 use App\Entity\StackCategory;
+use App\Service\Icon\SimpleIconImporter;
 use App\Service\Icon\StackIconCatalog;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -23,6 +25,7 @@ class StackCrudController extends AbstractCrudController
 {
     public function __construct(
         private readonly StackIconCatalog $iconCatalog,
+        private readonly SimpleIconImporter $iconImporter,
     ) {
     }
 
@@ -61,8 +64,6 @@ class StackCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $iconChoices = $this->iconCatalog->choices();
-
         yield FormField::addColumn(8);
         yield TextField::new('name', 'Nazwa')
             ->setRequired(true)
@@ -71,23 +72,11 @@ class StackCrudController extends AbstractCrudController
             ->setRequired(true)
             ->setChoices($this->categoryChoices())
             ->renderAsNativeWidget();
-
-        if ($iconChoices === []) {
-            yield TextField::new('icon', 'Ikona')
-                ->setRequired(false)
-                ->setHelp('Brak lokalnych ikon. Uruchom: php bin/console app:import-simple-icons react symfony php postgresql docker tailwindcss')
-                ->setFormTypeOption('attr', [
-                    'placeholder' => 'react',
-                    'pattern' => '[a-z0-9]{1,80}',
-                    'maxlength' => 80,
-                ]);
-        } else {
-            yield ChoiceField::new('icon', 'Ikona')
-                ->setRequired(false)
-                ->setChoices($iconChoices)
-                ->renderAsNativeWidget()
-                ->setHelp('Ikona SVG z public/icons/stack/. Więcej zaimportujesz komendą app:import-simple-icons.');
-        }
+        yield ChoiceField::new('icon', 'Ikona')
+            ->setRequired(false)
+            ->setChoices($this->iconCatalog->choices())
+            ->autocomplete()
+            ->setHelp('Szukaj po nazwie (np. Node.js). Slugi znajdziesz na simpleicons.org. Ikona zostanie skopiowana lokalnie przy zapisie.');
 
         yield FormField::addColumn(4);
         yield BooleanField::new('published', 'Opublikowana')->renderAsSwitch(true);
@@ -95,6 +84,24 @@ class StackCrudController extends AbstractCrudController
         yield IntegerField::new('sortOrder', 'Kolejność')
             ->setHelp('Kolejność w kategorii (niższe najpierw).')
             ->setFormTypeOption('attr', ['min' => 0]);
+    }
+
+    public function persistEntity(EntityManagerInterface $entityManager, object $entityInstance): void
+    {
+        if ($entityInstance instanceof Stack) {
+            $this->ensureIconImported($entityInstance);
+        }
+
+        parent::persistEntity($entityManager, $entityInstance);
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, object $entityInstance): void
+    {
+        if ($entityInstance instanceof Stack) {
+            $this->ensureIconImported($entityInstance);
+        }
+
+        parent::updateEntity($entityManager, $entityInstance);
     }
 
     /**
@@ -108,5 +115,22 @@ class StackCrudController extends AbstractCrudController
         }
 
         return $choices;
+    }
+
+    private function ensureIconImported(Stack $stack): void
+    {
+        $icon = $stack->getIcon();
+        if ($icon === null || $icon === '') {
+            return;
+        }
+
+        $report = $this->iconImporter->import($icon);
+        if ($report->hasErrors()) {
+            throw new \InvalidArgumentException(sprintf(
+                'Nie udało się zaimportować ikony "%s": %s',
+                $icon,
+                $report->firstError() ?? 'nieznany błąd',
+            ));
+        }
     }
 }

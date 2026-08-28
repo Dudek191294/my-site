@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Project;
+use App\Service\Admin\StackAssociationFieldConfigurator;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -23,6 +24,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class ProjectCrudController extends AbstractCrudController
 {
+    public function __construct(
+        private readonly StackAssociationFieldConfigurator $stackAssociationField,
+    ) {
+    }
+
     public static function getEntityFqcn(): string
     {
         return Project::class;
@@ -115,14 +121,19 @@ class ProjectCrudController extends AbstractCrudController
             ->hideOnIndex();
 
         yield FormField::addTab('Stack');
-        yield AssociationField::new('stacks', 'Technologie')
-            ->setRequired(false)
-            ->autocomplete()
-            ->setFormTypeOption('by_reference', false)
-            ->setHelp('Wybierz istniejące technologie. Nowe dodaj najpierw w module Stack.')
-            ->formatValue(static function ($value, Project $entity): string {
-                return implode(', ', $entity->getStacks()->map(static fn ($s) => $s->getName())->toArray());
-            });
+        yield FormField::addFieldset('Technologie projektu', 'fa fa-layer-group')
+            ->onlyOnForms();
+        yield $this->stackAssociationField->configure(
+            AssociationField::new('stacks', 'Przypisane technologie')
+        )->formatValue(static function ($value, Project $entity): string {
+            $names = $entity->getStacks()->map(static fn ($stack) => $stack->getName())->toArray();
+
+            if ($names === []) {
+                return '—';
+            }
+
+            return implode(', ', $names);
+        });
 
         yield FormField::addTab('Studium przypadku');
         yield TextareaField::new('challenge', 'Wyzwanie')

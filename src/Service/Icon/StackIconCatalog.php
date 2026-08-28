@@ -3,20 +3,20 @@
 namespace App\Service\Icon;
 
 /**
- * Catalog of locally imported stack icons (public/icons/stack/*.svg).
- * Does not scan on every public page render — used by admin / importer.
+ * Catalog of Simple Icons available from the Composer package (for admin picker).
  */
 final class StackIconCatalog
 {
     public function __construct(
+        private readonly SimpleIconsPackage $package,
         private readonly StackIconResolver $resolver,
     ) {
     }
 
     /**
-     * @return list<string> sorted icon slugs available locally
+     * @return list<string> sorted icon slugs available locally in public/icons/stack/
      */
-    public function listSlugs(): array
+    public function listLocalSlugs(): array
     {
         $dir = $this->resolver->getIconsDirectory();
         if ($dir === '' || !is_dir($dir)) {
@@ -41,15 +41,19 @@ final class StackIconCatalog
     }
 
     /**
-     * ChoiceField map: label => value (slug => slug, humanized label).
+     * ChoiceField map: label => value (human title + slug => slug).
      *
      * @return array<string, string>
      */
     public function choices(): array
     {
+        if (!$this->package->isInstalled()) {
+            return $this->localChoices();
+        }
+
         $choices = [];
-        foreach ($this->listSlugs() as $slug) {
-            $choices[$this->labelFor($slug)] = $slug;
+        foreach ($this->package->titleMap() as $slug => $title) {
+            $choices[sprintf('%s (%s)', $title, $slug)] = $slug;
         }
 
         return $choices;
@@ -57,21 +61,23 @@ final class StackIconCatalog
 
     public function labelFor(string $slug): string
     {
-        $known = [
-            'php' => 'PHP',
-            'postgresql' => 'PostgreSQL',
-            'tailwindcss' => 'Tailwind CSS',
-            'github' => 'GitHub',
-            'css' => 'CSS',
-            'html5' => 'HTML5',
-            'javascript' => 'JavaScript',
-            'typescript' => 'TypeScript',
-        ];
-
-        if (isset($known[$slug])) {
-            return $known[$slug];
+        if ($this->package->isInstalled()) {
+            return $this->package->titleFor($slug);
         }
 
         return ucfirst($slug);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function localChoices(): array
+    {
+        $choices = [];
+        foreach ($this->listLocalSlugs() as $slug) {
+            $choices[$this->labelFor($slug).' ('.$slug.')'] = $slug;
+        }
+
+        return $choices;
     }
 }

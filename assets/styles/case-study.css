@@ -85,15 +85,6 @@
     gap: var(--space-sm);
 }
 
-.case-study__stack li {
-    font-size: 0.8125rem;
-    color: var(--color-text) !important;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    padding: var(--space-xs) var(--space-sm);
-}
-
 .case-study__links {
     list-style: none;
     margin: 0;

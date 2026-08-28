@@ -10,7 +10,7 @@
         {% if project.stacks|length > 0 %}
             <ul class="project-card__stack">
                 {% for item in project.stacks %}
-                    <li>{% include 'components/stack_item.html.twig' with { stack: item } only %}</li>
+                    <li>{% include 'components/technology_pill.html.twig' with { name: item.name, icon: item.icon, variant: 'neutral' } only %}</li>
                 {% endfor %}
             </ul>
         {% endif %}

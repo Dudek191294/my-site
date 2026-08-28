@@ -95,6 +95,31 @@ class StackRepository extends ServiceEntityRepository
      *
      * @return list<string>
      */
+    public function existsByName(string $name, ?int $excludeId = null): bool
+    {
+        return $this->findOneByName($name, $excludeId) !== null;
+    }
+
+    public function findOneByName(string $name, ?int $excludeId = null): ?Stack
+    {
+        $normalized = mb_strtolower(trim($name));
+        if ($normalized === '') {
+            return null;
+        }
+
+        $qb = $this->createQueryBuilder('s')
+            ->andWhere('LOWER(s.name) = :name')
+            ->setParameter('name', $normalized)
+            ->setMaxResults(1);
+
+        if ($excludeId !== null) {
+            $qb->andWhere('s.id != :excludeId')
+                ->setParameter('excludeId', $excludeId);
+        }
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     public function findDistinctIconSlugs(): array
     {
         /** @var list<array{icon: string}> $rows */

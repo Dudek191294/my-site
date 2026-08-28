@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Experience;
+use App\Service\Admin\StackAssociationFieldConfigurator;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -22,6 +23,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class ExperienceCrudController extends AbstractCrudController
 {
+    public function __construct(
+        private readonly StackAssociationFieldConfigurator $stackAssociationField,
+    ) {
+    }
+
     public static function getEntityFqcn(): string
     {
         return Experience::class;
@@ -64,14 +70,17 @@ class ExperienceCrudController extends AbstractCrudController
             ->setRequired(false)
             ->setHelp('Opcjonalnie. Lista punktów na stronie publicznej tylko gdy jest choć jeden wpis.')
             ->hideOnIndex();
-        yield AssociationField::new('stacks', 'Technologie')
-            ->setRequired(false)
-            ->autocomplete()
-            ->setFormTypeOption('by_reference', false)
-            ->setHelp('Wybierz istniejące technologie. Nowe dodaj najpierw w module Stack.')
-            ->formatValue(static function ($value, Experience $entity): string {
-                return implode(', ', $entity->getStacks()->map(static fn ($s) => $s->getName())->toArray());
-            });
+        yield $this->stackAssociationField->configure(
+            AssociationField::new('stacks', 'Technologie')
+        )->formatValue(static function ($value, Experience $entity): string {
+            $names = $entity->getStacks()->map(static fn ($stack) => $stack->getName())->toArray();
+
+            if ($names === []) {
+                return '—';
+            }
+
+            return implode(', ', $names);
+        });
 
         yield FormField::addColumn(4);
         yield DateField::new('startDate', 'Data rozpoczęcia')->setRequired(true);
