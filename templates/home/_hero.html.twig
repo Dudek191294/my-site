@@ -36,12 +36,15 @@
                 <p class="hero__meta">{{ heroMeta|join(' · ') }}</p>
             {% endif %}
         </div>
-        <figure class="hero__photo">
+        <figure class="hero__photo relative">
             <img
                 src="/images/moje-removebg.png"
                 alt="{{ site ? site.siteName : 'Portret' }}"
                 width="800"
                 height="1200"
+                class="w-full h-full object-cover object-top
+                       [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]
+                       [-webkit-mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]"
             >
         </figure>
     </div>
