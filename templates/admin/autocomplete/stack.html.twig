@@ -1,0 +1,11 @@
+<div class="stack-autocomplete-option">
+    {% if entity.icon %}
+        <span class="stack-autocomplete-option__icon" aria-hidden="true">{{ stack_icon_svg(entity.icon)|raw }}</span>
+    {% else %}
+        <span class="stack-autocomplete-option__icon stack-autocomplete-option__icon--empty" aria-hidden="true"></span>
+    {% endif %}
+    <span class="stack-autocomplete-option__body">
+        <span class="stack-autocomplete-option__name">{{ entity.name }}</span>
+        <span class="stack-autocomplete-option__category">{{ entity.category.label }}</span>
+    </span>
+</div>
