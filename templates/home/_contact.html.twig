@@ -18,10 +18,9 @@
             </ul>
         {% endif %}
 
-        {% if site and site.contactEmail %}
-            <p class="contact__cta">
-                <a class="btn btn--primary" href="mailto:{{ site.contactEmail }}">Napisz do mnie</a>
-            </p>
-        {% endif %}
+        {% set contactEmail = site and site.contactEmail ? site.contactEmail : 'd.dudziak191294@gmail.com' %}
+        <p class="contact__cta">
+            <a class="btn btn--primary" href="mailto:{{ contactEmail }}">Napisz do mnie</a>
+        </p>
     </div>
 </section>

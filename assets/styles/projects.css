@@ -85,14 +85,14 @@
     gap: var(--space-md);
 }
 
-.project-card__links a:not(.btn-demo) {
+.project-card__links a:not(.btn) {
     color: var(--color-accent);
     text-decoration: none;
     font-size: 0.9375rem;
     font-weight: 500;
 }
 
-.project-card__links a:not(.btn-demo):hover {
+.project-card__links a:not(.btn):hover {
     color: var(--color-accent-hover);
 }
 

@@ -19,22 +19,17 @@
             <ul class="project-card__links">
                 {% if project.demoUrl %}
                     <li>
-                        <a
-                            href="{{ project.demoUrl }}"
-                            class="btn-demo inline-flex items-center justify-center rounded border border-[#0d6efd] bg-[#0d6efd] px-2 py-1 text-sm leading-5 text-white no-underline hover:border-[#0a58ca] hover:bg-[#0b5ed7] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0d6efd]"
-                        >Zobacz</a>
+                        <a class="btn btn--primary" href="{{ project.demoUrl }}">Zobacz</a>
                     </li>
                 {% endif %}
                 {% if project.githubUrl %}
-                    <li><a href="{{ project.githubUrl }}">GitHub</a></li>
+                    <li>
+                        <a class="btn btn--secondary" href="{{ project.githubUrl }}">GitHub</a>
+                    </li>
                 {% endif %}
                 {% if project.hasDetails and dialogId %}
                     <li>
-                        <button
-                            type="button"
-                            class="btn-more inline-flex items-center justify-center rounded border border-[#0d6efd] bg-transparent px-2 py-1 text-sm leading-5 text-[#6ea8fe] hover:bg-[#0d6efd] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0d6efd]"
-                            data-dialog-open="{{ dialogId }}"
-                        >Więcej</button>
+                        <button type="button" class="btn btn--secondary" data-dialog-open="{{ dialogId }}">Więcej</button>
                     </li>
                 {% endif %}
             </ul>

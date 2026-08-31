@@ -11,9 +11,9 @@
 .site-nav__list a,
 .site-footer__links a,
 .hero__social a,
-.project-card__links a:not(.btn-demo),
+.project-card__links a:not(.btn),
 .case-study__back a,
-.case-study__links a:not(.btn-demo) {
+.case-study__links a:not(.btn) {
     position: relative;
     background-image: linear-gradient(currentColor, currentColor);
     background-position: 0 100%;
@@ -30,12 +30,12 @@
 .site-footer__links a:focus-visible,
 .hero__social a:hover,
 .hero__social a:focus-visible,
-.project-card__links a:not(.btn-demo):hover,
-.project-card__links a:not(.btn-demo):focus-visible,
+.project-card__links a:not(.btn):hover,
+.project-card__links a:not(.btn):focus-visible,
 .case-study__back a:hover,
 .case-study__back a:focus-visible,
-.case-study__links a:not(.btn-demo):hover,
-.case-study__links a:not(.btn-demo):focus-visible {
+.case-study__links a:not(.btn):hover,
+.case-study__links a:not(.btn):focus-visible {
     background-size: 100% 1px;
 }
 
@@ -133,9 +133,9 @@
     .site-nav__list a,
     .site-footer__links a,
     .hero__social a,
-    .project-card__links a:not(.btn-demo),
+    .project-card__links a:not(.btn),
     .case-study__back a,
-    .case-study__links a:not(.btn-demo) {
+    .case-study__links a:not(.btn) {
         transition: none;
     }
 
@@ -153,9 +153,9 @@
     .site-nav__list a,
     .site-footer__links a,
     .hero__social a,
-    .project-card__links a:not(.btn-demo),
+    .project-card__links a:not(.btn),
     .case-study__back a,
-    .case-study__links a:not(.btn-demo) {
+    .case-study__links a:not(.btn) {
         background-size: 0 1px;
     }
 
@@ -165,12 +165,12 @@
     .site-footer__links a:focus-visible,
     .hero__social a:hover,
     .hero__social a:focus-visible,
-    .project-card__links a:not(.btn-demo):hover,
-    .project-card__links a:not(.btn-demo):focus-visible,
+    .project-card__links a:not(.btn):hover,
+    .project-card__links a:not(.btn):focus-visible,
     .case-study__back a:hover,
     .case-study__back a:focus-visible,
-    .case-study__links a:not(.btn-demo):hover,
-    .case-study__links a:not(.btn-demo):focus-visible {
+    .case-study__links a:not(.btn):hover,
+    .case-study__links a:not(.btn):focus-visible {
         background-size: 100% 1px;
         transition: none;
     }
