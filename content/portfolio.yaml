@@ -88,7 +88,7 @@ stacks:
   -
     name: 'REST API'
     category: tools
-    icon: swagger
+    icon: api
     featured: false
     published: true
     sort_order: 0
@@ -110,7 +110,7 @@ projects:
     solution: ~
     demo_url: 'https://demo.mug3d.art/design'
     github_url: ~
-    image: zrzut-ekranu-2026-08-31-o-13-07-14-e531d4733bba137cf8a2a466ea474d013e08aa53.png
+    image: /images/projects/mug-3d-art.png
     image_alt: ~
     featured: true
     published: true

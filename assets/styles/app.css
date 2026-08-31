@@ -173,3 +173,7 @@ p {
     height: 100%;
     fill: currentColor;
 }
+
+.tech-pill__icon svg[fill="none"] {
+    fill: none;
+}
