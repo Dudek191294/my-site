@@ -96,6 +96,11 @@
     color: var(--color-accent-hover);
 }
 
+.project-card__links a.btn {
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
 .project-details-dialog::backdrop {
     background: rgb(0 0 0 / 0.72);
 }
