@@ -12,13 +12,13 @@ services:
     depends_on:
       - db
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-changeme}@db:5432/app?serverVersion=18&charset=utf8
+      POSTGRES_PASSWORD: v7WUnpu8kDAzjtFBfq4n
+      DATABASE_URL: postgresql://postgres:v7WUnpu8kDAzjtFBfq4n@db:5432/app?serverVersion=18&charset=utf8
 
   db:
     image: postgres:18
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_PASSWORD: v7WUnpu8kDAzjtFBfq4n
       POSTGRES_DB: app
     ports:
       - "5432:5432"
