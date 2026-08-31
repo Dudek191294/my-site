@@ -101,8 +101,9 @@ class ProjectCrudController extends AbstractCrudController
             ->setFormat('short', 'short');
 
         yield FormField::addTab('Linki i media');
-        yield UrlField::new('demoUrl', 'URL demo')
+        yield UrlField::new('demoUrl', 'Link do strony')
             ->setRequired(false)
+            ->setHelp('Demo, produkcja albo inny publiczny adres. Na karcie widać przycisk „Zobacz”.')
             ->hideOnIndex();
         yield UrlField::new('githubUrl', 'URL GitHub')
             ->setRequired(false)
@@ -135,7 +136,7 @@ class ProjectCrudController extends AbstractCrudController
             return implode(', ', $names);
         });
 
-        yield FormField::addTab('Studium przypadku');
+        yield FormField::addTab('Szczegóły');
         yield TextareaField::new('challenge', 'Wyzwanie')
             ->setRequired(false)
             ->setHelp('Opcjonalnie. Pokazywane na stronie projektu tylko gdy wypełnione.')
