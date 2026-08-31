@@ -1,4 +1,5 @@
 import './styles/app.css';
+import './styles/buttons.css';
 import './styles/layout.css';
 import './styles/hero.css';
 import './styles/projects.css';

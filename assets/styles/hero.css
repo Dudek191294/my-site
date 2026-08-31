@@ -63,54 +63,6 @@
     mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
 }
 
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.75rem 1.25rem;
-    border-radius: var(--radius-md);
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.2;
-    text-decoration: none;
-    border: 1px solid transparent;
-    cursor: pointer;
-    -webkit-text-fill-color: currentColor;
-}
-
-a.btn.btn--primary,
-.btn.btn--primary {
-    background-color: var(--color-accent);
-    color: #0f1115;
-    -webkit-text-fill-color: #0f1115;
-}
-
-a.btn.btn--primary:hover,
-a.btn.btn--primary:visited,
-a.btn.btn--primary:active,
-.btn.btn--primary:hover {
-    background-color: var(--color-accent-hover);
-    color: #0f1115;
-    -webkit-text-fill-color: #0f1115;
-}
-
-a.btn.btn--secondary,
-.btn.btn--secondary {
-    background-color: transparent;
-    color: var(--color-text);
-    -webkit-text-fill-color: currentColor;
-    border-color: var(--color-border);
-}
-
-a.btn.btn--secondary:hover,
-a.btn.btn--secondary:visited,
-.btn.btn--secondary:hover {
-    border-color: var(--color-muted);
-    color: var(--color-text);
-    -webkit-text-fill-color: currentColor;
-}
-
 .hero__social {
     list-style: none;
     margin: 0 0 var(--space-lg);

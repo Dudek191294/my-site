@@ -29,7 +29,7 @@
                 {% endif %}
                 {% if project.hasDetails and dialogId %}
                     <li>
-                        <button type="button" class="btn btn--secondary" data-dialog-open="{{ dialogId }}">Więcej</button>
+                        <button type="button" class="btn btn--ghost" data-dialog-open="{{ dialogId }}">Więcej</button>
                     </li>
                 {% endif %}
             </ul>
@@ -40,7 +40,7 @@
             <div class="flex items-start justify-between gap-4 mb-4">
                 <h3 class="m-0 text-xl font-semibold">{{ project.title }}</h3>
                 <form method="dialog">
-                    <button type="submit" class="rounded border border-border bg-transparent px-2 py-1 text-sm text-muted hover:text-text hover:border-muted" aria-label="Zamknij">Zamknij</button>
+                    <button type="submit" class="btn btn--ghost" aria-label="Zamknij">Zamknij</button>
                 </form>
             </div>
             {% if project.imageUrl %}
