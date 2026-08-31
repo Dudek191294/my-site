@@ -191,6 +191,27 @@ class Project
         return $this;
     }
 
+    /**
+     * Extra case-study fields beyond the card summary (short description).
+     */
+    public function hasDetails(): bool
+    {
+        return $this->hasExtendedDescription()
+            || $this->role !== null
+            || $this->challenge !== null
+            || $this->solution !== null;
+    }
+
+    public function hasExtendedDescription(): bool
+    {
+        $description = trim($this->description);
+        if ($description === '') {
+            return false;
+        }
+
+        return $description !== trim($this->shortDescription);
+    }
+
     public function getDemoUrl(): ?string
     {
         return $this->demoUrl;

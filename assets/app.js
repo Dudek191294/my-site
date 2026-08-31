@@ -7,3 +7,4 @@ import './styles/sections.css';
 import './styles/responsive.css';
 import './styles/motion.css';
 import './motion.js';
+import './project-dialog.js';

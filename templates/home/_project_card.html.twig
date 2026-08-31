@@ -1,4 +1,5 @@
 <article class="project-card">
+    {% set dialogId = project.id ? 'project-details-' ~ project.id : null %}
     {% if project.imageUrl %}
         <div class="project-card__visual" role="img" aria-label="{{ project.imageAlt|default('Zrzut ekranu projektu') }}">
             <img src="{{ project.imageUrl }}" alt="{{ project.imageAlt|default('') }}" loading="lazy" width="640" height="400">
@@ -14,14 +15,60 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <ul class="project-card__links">
-            {% if project.demoUrl %}
-                <li><a href="{{ project.demoUrl }}">Demo</a></li>
-            {% endif %}
-            {% if project.githubUrl %}
-                <li><a href="{{ project.githubUrl }}">GitHub</a></li>
-            {% endif %}
-            <li><a href="{{ path('project_show', {slug: project.slug}) }}">Studium przypadku</a></li>
-        </ul>
+        {% if project.demoUrl or project.githubUrl or project.hasDetails %}
+            <ul class="project-card__links">
+                {% if project.demoUrl %}
+                    <li>
+                        <a
+                            href="{{ project.demoUrl }}"
+                            class="btn-demo inline-flex items-center justify-center rounded border border-[#0d6efd] bg-[#0d6efd] px-2 py-1 text-sm leading-5 text-white no-underline hover:border-[#0a58ca] hover:bg-[#0b5ed7] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0d6efd]"
+                        >Demo</a>
+                    </li>
+                {% endif %}
+                {% if project.githubUrl %}
+                    <li><a href="{{ project.githubUrl }}">GitHub</a></li>
+                {% endif %}
+                {% if project.hasDetails and dialogId %}
+                    <li>
+                        <button
+                            type="button"
+                            class="btn-more inline-flex items-center justify-center rounded border border-[#0d6efd] bg-transparent px-2 py-1 text-sm leading-5 text-[#6ea8fe] hover:bg-[#0d6efd] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0d6efd]"
+                            data-dialog-open="{{ dialogId }}"
+                        >Więcej</button>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
     </div>
+    {% if project.hasDetails and dialogId %}
+        <dialog id="{{ dialogId }}" class="project-details-dialog m-auto w-[min(42rem,calc(100%-1.5rem))] max-h-[min(85vh,40rem)] overflow-y-auto rounded-lg border border-border bg-surface p-6 text-text shadow-xl">
+            <div class="flex items-start justify-between gap-4 mb-4">
+                <h3 class="m-0 text-xl font-semibold">{{ project.title }}</h3>
+                <form method="dialog">
+                    <button type="submit" class="rounded border border-border bg-transparent px-2 py-1 text-sm text-muted hover:text-text hover:border-muted" aria-label="Zamknij">Zamknij</button>
+                </form>
+            </div>
+            {% if project.imageUrl %}
+                <img src="{{ project.imageUrl }}" alt="{{ project.imageAlt|default(project.title) }}" class="mb-4 w-full rounded-md" width="960" height="600">
+            {% endif %}
+            {% if project.hasExtendedDescription %}
+                <p class="m-0 mb-4 text-muted whitespace-pre-line">{{ project.description }}</p>
+            {% endif %}
+            {% if project.role %}
+                <p class="m-0 mb-3 text-muted"><span class="text-text font-medium">Rola: </span>{{ project.role }}</p>
+            {% endif %}
+            {% if project.challenge %}
+                <div class="mb-3">
+                    <h4 class="m-0 mb-1 text-sm font-medium">Wyzwanie</h4>
+                    <p class="m-0 text-muted whitespace-pre-line">{{ project.challenge }}</p>
+                </div>
+            {% endif %}
+            {% if project.solution %}
+                <div class="mb-3">
+                    <h4 class="m-0 mb-1 text-sm font-medium">Rozwiązanie</h4>
+                    <p class="m-0 text-muted whitespace-pre-line">{{ project.solution }}</p>
+                </div>
+            {% endif %}
+        </dialog>
+    {% endif %}
 </article>

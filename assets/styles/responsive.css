@@ -112,8 +112,8 @@ body {
 }
 
 /* Prevent long placeholder URLs from blowing layout */
-.project-card__links a,
-.case-study__links a,
+.project-card__links a:not(.btn-demo),
+.case-study__links a:not(.btn-demo),
 .hero__social a {
     overflow-wrap: anywhere;
 }

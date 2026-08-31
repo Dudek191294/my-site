@@ -95,12 +95,12 @@
     flex-direction: row !important;
 }
 
-.case-study__links a {
+.case-study__links a:not(.btn-demo) {
     color: var(--color-accent);
     text-decoration: none;
     font-weight: 500;
 }
 
-.case-study__links a:hover {
+.case-study__links a:not(.btn-demo):hover {
     color: var(--color-accent-hover);
 }
