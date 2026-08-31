@@ -46,7 +46,7 @@ stacks:
   -
     name: 'MS SQL'
     category: database
-    icon: ~
+    icon: microsoftsqlserver
     featured: false
     published: true
     sort_order: 0
@@ -88,7 +88,7 @@ stacks:
   -
     name: 'REST API'
     category: tools
-    icon: ~
+    icon: swagger
     featured: false
     published: true
     sort_order: 0
