@@ -1,0 +1,153 @@
+# Treść CMS strony (projekty, stack, doświadczenie, ustawienia, linki).
+# Nie zawiera kont użytkowników — te zostają na danym środowisku.
+#
+# Klucze upsert przy imporcie:
+#   stack          → name
+#   project        → slug
+#   experience     → company + role + start_date
+#   social_link    → platform
+#   site_setting   → pojedynczy wiersz
+#
+# Import nie kasuje rekordów, których nie ma w tym pliku.
+#   php bin/console app:content:export
+#   php bin/console app:content:import
+site_setting:
+  site_name: Portfolio
+  role_title: ''
+  headline: Portfolio
+  positioning: ''
+  location: ~
+  availability: ~
+  work_mode: ~
+  about_body: ''
+  principles: {}
+  contact_intro: ~
+  contact_email: ~
+  projects_intro: ~
+  experience_intro: ~
+  stack_intro: ~
+  github_intro: ~
+  meta_description: ~
+stacks:
+  -
+    name: PHP
+    category: backend
+    icon: php
+    featured: false
+    published: true
+    sort_order: 2
+  -
+    name: Symfony
+    category: backend
+    icon: symfony
+    featured: false
+    published: true
+    sort_order: 3
+  -
+    name: 'MS SQL'
+    category: database
+    icon: ~
+    featured: false
+    published: true
+    sort_order: 0
+  -
+    name: PostgreSQL
+    category: database
+    icon: postgresql
+    featured: false
+    published: false
+    sort_order: 4
+  -
+    name: JQuery
+    category: frontend
+    icon: jquery
+    featured: false
+    published: true
+    sort_order: 0
+  -
+    name: React.js
+    category: frontend
+    icon: react
+    featured: false
+    published: true
+    sort_order: 1
+  -
+    name: 'Tailwind CSS'
+    category: frontend
+    icon: tailwindcss
+    featured: false
+    published: true
+    sort_order: 10
+  -
+    name: Docker
+    category: infrastructure
+    icon: docker
+    featured: false
+    published: true
+    sort_order: 5
+  -
+    name: 'REST API'
+    category: tools
+    icon: ~
+    featured: false
+    published: true
+    sort_order: 0
+projects:
+  -
+    slug: mug-3d-art
+    title: 'mug 3d art'
+    short_description: 'Mug 3D Art to interaktywny konfigurator kubków 3D, który pozwala użytkownikowi stworzyć własny projekt nadruku i od razu zobaczyć, jak będzie wyglądał na rzeczywistym modelu kubka. Aplikacja umożliwia dodawanie grafik i tekstów, zmianę kolorów poszczególnych elementów oraz zapisanie i udostępnienie gotowego projektu.'
+    description: |-
+      Mug 3D Art został stworzony dla firmy zajmującej się produkcją nadruków na kubkach. Kluczowym elementem aplikacji jest interaktywny model 3D, który można swobodnie obracać i przybliżać, aby zobaczyć projekt z każdej strony.
+
+      Użytkownik może dodać własne zdjęcie lub logo, umieścić na kubku tekst oraz dostosować wygląd poszczególnych elementów. Możliwe jest niezależne zmienianie kolorów korpusu i ucha kubka, dzięki czemu projekt można skonfigurować zgodnie z własnymi potrzebami.
+
+      Gotowy projekt można zapisać i udostępnić za pomocą linku. Odbiorca udostępnionego projektu otrzymuje dostęp do interaktywnego podglądu — może obracać i oglądać kubek, ale nie może modyfikować jego ustawień.
+
+      W projekcie wykorzystano React, MobX i Babylon.js. Backend oparty był na istniejącym rozwiązaniu PHP Symfony.
+    role: ~
+    challenge: ~
+    solution: ~
+    demo_url: 'https://demo.mug3d.art/design'
+    github_url: ~
+    image: zrzut-ekranu-2026-08-31-o-13-07-14-e531d4733bba137cf8a2a466ea474d013e08aa53.png
+    image_alt: ~
+    featured: true
+    published: true
+    sort_order: 0
+    stacks: {}
+  -
+    slug: alice
+    title: Alice
+    short_description: 'Nowoczesna strona one-page dla gabinetu fizjoterapii uroginekologicznej i maderoterapii. Strona prezentuje ofertę gabinetu, najważniejsze informacje oraz ułatwia potencjalnym klientkom kontakt i umówienie wizyty.'
+    description: |-
+      Projekt obejmował stworzenie od podstaw responsywnej strony internetowej dla gabinetu Fizjoterapii Uroginekologicznej i Maderoterapii. Celem było przygotowanie prostej i przejrzystej wizytówki internetowej, która w czytelny sposób przedstawia zakres oferowanych usług i najważniejsze informacje o gabinecie.
+
+      Strona została zbudowana w React.js i zaprojektowana z podejściem mobile-first, ze szczególnym uwzględnieniem wygodnego korzystania z niej na urządzeniach mobilnych. Warstwa wizualna powstała na podstawie własnej koncepcji, częściowo inspirowanej materiałami promocyjnymi gabinetu przygotowanymi wcześniej przez zewnętrzne biuro marketingowe.
+
+      Projekt został zrealizowany kompleksowo — od przygotowania strony i interfejsu, przez implementację poszczególnych sekcji, po wdrożenie.
+    role: ~
+    challenge: ~
+    solution: ~
+    demo_url: ~
+    github_url: ~
+    image: ~
+    image_alt: ~
+    featured: false
+    published: true
+    sort_order: 0
+    stacks: {}
+experiences:
+  -
+    company: 'Flow Co'
+    role: 'Flow Engineer Updated'
+    description: 'Built things'
+    bullets:
+      - 'Shipped flow test'
+    start_date: '2023-01-01'
+    end_date: ~
+    current: true
+    published: false
+    sort_order: 5
+    stacks: {}
+social_links: {}

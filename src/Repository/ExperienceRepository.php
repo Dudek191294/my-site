@@ -33,4 +33,39 @@ class ExperienceRepository extends ServiceEntityRepository
 
         return $entries;
     }
+
+    public function findOneByIdentity(string $company, string $role, \DateTimeImmutable $startDate): ?Experience
+    {
+        /** @var Experience|null $entry */
+        $entry = $this->createQueryBuilder('e')
+            ->andWhere('e.company = :company')
+            ->andWhere('e.role = :role')
+            ->andWhere('e.startDate = :startDate')
+            ->setParameter('company', $company)
+            ->setParameter('role', $role)
+            ->setParameter('startDate', $startDate)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $entry;
+    }
+
+    /**
+     * @return list<Experience>
+     */
+    public function findAllWithStacks(): array
+    {
+        /** @var list<Experience> $entries */
+        $entries = $this->createQueryBuilder('e')
+            ->leftJoin('e.stacks', 's')
+            ->addSelect('s')
+            ->orderBy('e.sortOrder', 'ASC')
+            ->addOrderBy('e.startDate', 'DESC')
+            ->addOrderBy('e.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        return $entries;
+    }
 }

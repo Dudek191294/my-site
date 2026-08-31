@@ -50,14 +50,20 @@ final class SimpleIconImporter
                 continue;
             }
 
+            $destination = $targetDir.\DIRECTORY_SEPARATOR.$slug.'.svg';
             $sourceReal = $this->package->sourcePathFor($slug);
             if ($sourceReal === null) {
+                if (is_file($destination)) {
+                    $skipped[] = sprintf('%s — already exists locally (not in Simple Icons package)', $slug);
+
+                    continue;
+                }
+
                 $errors[] = sprintf('%s — not found in Simple Icons package', $slug);
 
                 continue;
             }
 
-            $destination = $targetDir.\DIRECTORY_SEPARATOR.$slug.'.svg';
             if (is_file($destination) && !$force) {
                 $skipped[] = sprintf('%s — already exists (use --force to overwrite)', $slug);
 

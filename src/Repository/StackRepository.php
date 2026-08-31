@@ -90,11 +90,6 @@ class StackRepository extends ServiceEntityRepository
         return array_filter($grouped, static fn (array $items): bool => $items !== []);
     }
 
-    /**
-     * Distinct icon slugs referenced by Stack rows (for import --from-database).
-     *
-     * @return list<string>
-     */
     public function existsByName(string $name, ?int $excludeId = null): bool
     {
         return $this->findOneByName($name, $excludeId) !== null;
@@ -120,6 +115,27 @@ class StackRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @return list<Stack>
+     */
+    public function findAllOrdered(): array
+    {
+        /** @var list<Stack> $stacks */
+        $stacks = $this->createQueryBuilder('s')
+            ->orderBy('s.category', 'ASC')
+            ->addOrderBy('s.sortOrder', 'ASC')
+            ->addOrderBy('s.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        return $stacks;
+    }
+
+    /**
+     * Distinct icon slugs referenced by Stack rows (for import --from-database).
+     *
+     * @return list<string>
+     */
     public function findDistinctIconSlugs(): array
     {
         /** @var list<array{icon: string}> $rows */

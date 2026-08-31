@@ -68,4 +68,26 @@ class ProjectRepository extends ServiceEntityRepository
 
         return $project;
     }
+
+    public function findOneBySlug(string $slug): ?Project
+    {
+        return $this->findOneBy(['slug' => $slug]);
+    }
+
+    /**
+     * @return list<Project>
+     */
+    public function findAllWithStacks(): array
+    {
+        /** @var list<Project> $projects */
+        $projects = $this->createQueryBuilder('p')
+            ->leftJoin('p.stacks', 's')
+            ->addSelect('s')
+            ->orderBy('p.sortOrder', 'ASC')
+            ->addOrderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        return $projects;
+    }
 }

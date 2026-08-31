@@ -31,4 +31,24 @@ class SocialLinkRepository extends ServiceEntityRepository
 
         return $links;
     }
+
+    public function findOneByPlatform(string $platform): ?SocialLink
+    {
+        return $this->findOneBy(['platform' => $platform]);
+    }
+
+    /**
+     * @return list<SocialLink>
+     */
+    public function findAllOrdered(): array
+    {
+        /** @var list<SocialLink> $links */
+        $links = $this->createQueryBuilder('l')
+            ->orderBy('l.sortOrder', 'ASC')
+            ->addOrderBy('l.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        return $links;
+    }
 }

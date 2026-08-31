@@ -56,16 +56,44 @@ final class StackIconCatalog
             $choices[sprintf('%s (%s)', $title, $slug)] = $slug;
         }
 
+        foreach ($this->listLocalSlugs() as $slug) {
+            if (\in_array($slug, $choices, true)) {
+                continue;
+            }
+
+            $choices[sprintf('%s (%s)', $this->labelFor($slug), $slug)] = $slug;
+        }
+
         return $choices;
     }
 
     public function labelFor(string $slug): string
     {
         if ($this->package->isInstalled()) {
-            return $this->package->titleFor($slug);
+            $map = $this->package->titleMap();
+            if (isset($map[$slug])) {
+                return $map[$slug];
+            }
+        }
+
+        $fromSvg = $this->titleFromLocalSvg($slug);
+        if ($fromSvg !== null) {
+            return $fromSvg;
         }
 
         return ucfirst($slug);
+    }
+
+    private function titleFromLocalSvg(string $slug): ?string
+    {
+        $svg = $this->resolver->resolveSvg($slug);
+        if ($svg === null || preg_match('/<title>([^<]+)<\/title>/i', $svg, $matches) !== 1) {
+            return null;
+        }
+
+        $title = html_entity_decode(trim($matches[1]), ENT_QUOTES | ENT_XML1, 'UTF-8');
+
+        return $title !== '' ? $title : null;
     }
 
     /**
