@@ -85,10 +85,6 @@
     gap: var(--space-md);
 }
 
-.project-details-dialog::backdrop {
-    background: rgb(0 0 0 / 0.72);
-}
-
 @media (min-width: 48rem) {
     .projects__grid {
         grid-template-columns: repeat(2, 1fr);

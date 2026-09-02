@@ -1,5 +1,4 @@
 <article class="project-card">
-    {% set dialogId = project.id ? 'project-details-' ~ project.id : null %}
     {% if project.imageUrl %}
         <div class="project-card__visual" role="img" aria-label="{{ project.imageAlt|default('Zrzut ekranu projektu') }}">
             <img src="{{ project.imageUrl }}" alt="{{ project.imageAlt|default('') }}" loading="lazy" width="640" height="400">
@@ -27,43 +26,12 @@
                         <a class="btn btn--secondary" href="{{ project.githubUrl }}">GitHub</a>
                     </li>
                 {% endif %}
-                {% if project.hasDetails and dialogId %}
+                {% if project.hasDetails and project.slug %}
                     <li>
-                        <button type="button" class="btn btn--ghost" data-dialog-open="{{ dialogId }}">Więcej</button>
+                        <a class="btn btn--ghost" href="{{ path('project_show', { slug: project.slug }) }}">Więcej</a>
                     </li>
                 {% endif %}
             </ul>
         {% endif %}
     </div>
-    {% if project.hasDetails and dialogId %}
-        <dialog id="{{ dialogId }}" class="project-details-dialog m-auto w-[min(42rem,calc(100%-1.5rem))] max-h-[min(85vh,40rem)] overflow-y-auto rounded-lg border border-border bg-surface p-6 text-text shadow-xl">
-            <div class="flex items-start justify-between gap-4 mb-4">
-                <h3 class="m-0 text-xl font-semibold">{{ project.title }}</h3>
-                <form method="dialog">
-                    <button type="submit" class="btn btn--ghost" aria-label="Zamknij">Zamknij</button>
-                </form>
-            </div>
-            {% if project.imageUrl %}
-                <img src="{{ project.imageUrl }}" alt="{{ project.imageAlt|default(project.title) }}" class="mb-4 w-full rounded-md" width="960" height="600">
-            {% endif %}
-            {% if project.hasExtendedDescription %}
-                <p class="m-0 mb-4 text-muted whitespace-pre-line">{{ project.description }}</p>
-            {% endif %}
-            {% if project.role %}
-                <p class="m-0 mb-3 text-muted"><span class="text-text font-medium">Rola: </span>{{ project.role }}</p>
-            {% endif %}
-            {% if project.challenge %}
-                <div class="mb-3">
-                    <h4 class="m-0 mb-1 text-sm font-medium">Wyzwanie</h4>
-                    <p class="m-0 text-muted whitespace-pre-line">{{ project.challenge }}</p>
-                </div>
-            {% endif %}
-            {% if project.solution %}
-                <div class="mb-3">
-                    <h4 class="m-0 mb-1 text-sm font-medium">Rozwiązanie</h4>
-                    <p class="m-0 text-muted whitespace-pre-line">{{ project.solution }}</p>
-                </div>
-            {% endif %}
-        </dialog>
-    {% endif %}
 </article>
